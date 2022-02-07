@@ -18,5 +18,14 @@ class SerializerOwnPostList(serializers.ModelSerializer):
         model  = ModelPost
         fields = ("title","images","createdDate","unique_id")
 
+class SerializerFollowersPostList(serializers.ModelSerializer):
+    createdDate = serializers.SerializerMethodField()
+
+    def get_createdDate(self, obj):
+        tarih = datetime.strftime(obj.createdDate, '%d/%m/%Y %H:%M:%S')
+        return str(tarih)
+    class Meta:
+        model  = ModelPost
+        fields = ("title","images","createdDate","unique_id")
 
 

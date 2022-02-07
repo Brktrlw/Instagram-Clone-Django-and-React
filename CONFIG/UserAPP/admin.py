@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ModelUser
+from .models import ModelUser,ModelFollower
 from PostAPP.models import ModelPost
 from django.contrib.auth.admin import UserAdmin
 
@@ -21,4 +21,4 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 admin.site.register(ModelUser,CustomUserAdmin)
-
+admin.site.register(ModelFollower)

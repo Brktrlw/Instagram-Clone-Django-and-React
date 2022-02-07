@@ -5,14 +5,14 @@ from django.contrib.auth.models import AbstractUser
 
 class ModelUser(AbstractUser):
     profilePhoto = models.ImageField(upload_to="profilePhoto",blank=True,null=True,verbose_name="Profil Fotoğrafı")
+    private   = models.BooleanField(default=False,verbose_name="Gizli Hesap mı")
 
     def __str__(self):
         return self.username
 
 class ModelFollower(models.Model):
-    follower = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takip edilen",related_name="followers")
+    follower  = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takip edilen",related_name="followers")
     following = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takip eden",related_name="followings")
-
     class Meta:
         verbose_name        = "Takip"
         db_table            = "Follower"

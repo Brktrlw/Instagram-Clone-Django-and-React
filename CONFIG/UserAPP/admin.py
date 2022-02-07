@@ -15,10 +15,14 @@ class PostAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     model        = ModelUser
     list_display = ("username","email")
-    fieldsets    =  UserAdmin.fieldsets +(
+    fieldsets    =  UserAdmin.fieldsets +\
+                    (
         ("Profil Fotoğrafı Değiştirme",{
-            "fields":["profilePhoto"]
+            "fields":["profilePhoto"],
         }),
+        ("Gizlilik Durumu", {
+            "fields": ["private"],
+        })
     )
 admin.site.register(ModelUser,CustomUserAdmin)
 admin.site.register(ModelFollower)

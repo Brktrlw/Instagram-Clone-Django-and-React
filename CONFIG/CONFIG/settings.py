@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'PostAPP',
     #Other App
     'django_cleanup',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

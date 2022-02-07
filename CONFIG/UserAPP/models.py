@@ -8,3 +8,7 @@ class ModelUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+class ModelFollower(models.Model):
+    follower = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takipçi",related_name="followers")
+    following = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takip eden",related_name="followings")

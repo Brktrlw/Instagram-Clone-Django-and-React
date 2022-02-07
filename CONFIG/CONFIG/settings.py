@@ -25,10 +25,9 @@ SECRET_KEY = 'django-insecure-y2f3iultb!dasmsen6agws@uv$p@xi40!uvqkx%#@az^i6=s63
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -134,6 +133,6 @@ AUTH_USER_MODEL = "UserAPP.ModelUser"
 MEDIA_URL="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
-
+APPEND_SLASH = False
 
 

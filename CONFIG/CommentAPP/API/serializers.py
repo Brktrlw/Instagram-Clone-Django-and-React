@@ -2,7 +2,7 @@ from rest_framework import serializers
 from CommentAPP.models import ModelComment
 from datetime import datetime
 
-class SerializerCommentListByPost(serializers.ModelSerializer):
+class SerializerCommentListByPost(serializers.ModelSerializer):   #Postun yorumlarını listelediğimiz serializer
     user        = serializers.CharField(source="user.username")
     replies     = serializers.SerializerMethodField()
     createdDate = serializers.SerializerMethodField()
@@ -19,4 +19,7 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
         model  = ModelComment
         fields = ("user","text","createdDate","replies")
 
-
+class SerializerCreateComment(serializers.ModelSerializer):   # yorum oluşturma view
+    class Meta:
+        model  = ModelComment
+        fields = ("text","parent")

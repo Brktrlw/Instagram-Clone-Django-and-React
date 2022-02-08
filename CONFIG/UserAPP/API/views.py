@@ -12,6 +12,7 @@ class UserFollowersAPIView(ListAPIView):
     def get_queryset(self):
         return self.request.user.followers.all()
 
+
 class UserFollowingAPIView(ListAPIView):
     # kullanıcınına dına göre takip ettiklerini döndürür
     serializer_class   = SerializerUserFollowings

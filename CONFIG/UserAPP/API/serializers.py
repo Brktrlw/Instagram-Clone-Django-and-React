@@ -1,20 +1,18 @@
 from rest_framework import serializers
 from UserAPP.models import ModelUser,ModelFollower
 
-
 class SerializerUserFollowers(serializers.ModelSerializer):
     follower = serializers.CharField(source="following.username")
+
     class Meta:
         model  = ModelFollower
         fields = ("follower",)
 
 class SerializerUserFollowings(serializers.ModelSerializer):
     following = serializers.CharField(source="follower.username")
-
-    totalFollower = serializers.ReadOnlyField()
     class Meta:
         model  = ModelFollower
-        fields = ("following","totalFollower")
+        fields = ("following",)
 
 class SerializerUserProfile(serializers.ModelSerializer): # Kullanıcının profil bilgilerini gönderdiğimiz serializer
     totalFollowers  = serializers.SerializerMethodField()

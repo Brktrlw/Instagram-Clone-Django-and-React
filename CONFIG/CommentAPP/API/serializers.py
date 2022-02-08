@@ -17,7 +17,7 @@ class SerializerCommentListByPost(serializers.ModelSerializer):   #Postun yoruml
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","createdDate","replies","unique_id")
+        fields = ("user","text","createdDate","unique_id","replies")
 
 class SerializerCreateComment(serializers.ModelSerializer):   # yorum oluşturma view
     class Meta:

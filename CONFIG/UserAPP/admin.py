@@ -3,6 +3,7 @@ from .models import ModelUser,ModelFollower
 from PostAPP.models import ModelPost
 from django.contrib.auth.admin import UserAdmin
 from CommentAPP.models import ModelComment
+from LikeAPP.models import ModelCommentLike,ModelPostLike
 
 @admin.register(ModelPost)
 class PostAdmin(admin.ModelAdmin):
@@ -31,3 +32,5 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(ModelUser,CustomUserAdmin)
 admin.site.register(ModelFollower)
 admin.site.register(ModelComment)
+admin.site.register(ModelCommentLike)
+admin.site.register(ModelPostLike)

@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView
-from UserAPP.models import ModelUser,ModelFollower
+from UserAPP.models import ModelUser
 from .serializers import SerializerUserFollowers,SerializerUserFollowings,SerializerUserProfile
 from rest_framework.permissions import IsAuthenticated
 from PostAPP.API.permissions import IsFollowing

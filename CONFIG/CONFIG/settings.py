@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'PostAPP',
     'CommentAPP',
     'LikeAPP',
+    'NotificationAPP',
+    'SavedPostAPP',
     #Other App
     'django_cleanup',
     'rest_framework',

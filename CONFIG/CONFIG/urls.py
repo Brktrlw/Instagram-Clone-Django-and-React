@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/post/', include("PostAPP.API.urls",namespace="post"),name="url_post"),
     path('api/comment/', include("CommentAPP.API.urls", namespace="comment"), name="url_comment"),
     path('api/user/', include("UserAPP.API.urls", namespace="user"), name="url_user"),
+    path('api/savedpost/', include("SavedPostAPP.API.urls", namespace="savedpost"), name="url_savedpost"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

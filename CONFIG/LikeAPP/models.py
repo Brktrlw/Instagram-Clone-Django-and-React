@@ -17,7 +17,6 @@ class ModelCommentLike(models.Model):
         verbose_name_plural = "Yorum Beğenileri"
         db_table            = "CommentLikes"
 
-
 @receiver(post_save,sender=ModelCommentLike)
 def whenLikeComment(sender,instance,*args,**kwargs):
     isLiked = ModelCommentLike.objects.filter(user=instance.user,comment=instance.comment)

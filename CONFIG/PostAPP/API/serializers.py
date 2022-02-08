@@ -3,12 +3,12 @@ from PostAPP.models import ModelPost
 from datetime import datetime
 
 
-class SerializerPostCreateDelete(serializers.ModelSerializer):
+class SerializerPostCreateDelete(serializers.ModelSerializer):   # Post oluşturma serializer'ı
     class Meta:
         model  = ModelPost
         fields = ("title","images")
 
-class SerializerOwnPostList(serializers.ModelSerializer):
+class SerializerOwnPostList(serializers.ModelSerializer):         # Kullanıcı kendi postlarını görüntülediği serializer
     createdDate = serializers.SerializerMethodField()
 
     def get_createdDate(self, obj):
@@ -54,3 +54,5 @@ class SerializerPostUpdate(serializers.ModelSerializer):  # Postu güncellediği
     class Meta:
         model  = ModelPost
         fields = ("title",)
+
+

@@ -1,6 +1,5 @@
 from django.db import models
 from UserAPP.models import ModelUser
-import uuid
 from django.utils.crypto import get_random_string
 
 def create_new_ref_number():

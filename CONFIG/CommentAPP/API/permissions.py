@@ -16,3 +16,14 @@ class IsFollowing(BasePermission):      # Kullanıcı takip ediyorsa postların 
         if target_user.private==True and isFollowing==False:
             return False
         return True
+
+class IsOwner(BasePermission):
+    message = "You must be the owner this object for any process"
+
+    def has_object_permission(self, request, view, obj):
+        print(obj.post.user)
+        return (obj.post.user == request.user) or (obj.user == request.user)
+        # silinecek yorumun postunun sahibi ile silmek isteyen kullanıcı aynı ise True döndürür
+        # OR
+        # silinecek yorumun sahibi ,silme isteğini atan kullanıcı ise True döndürür
+

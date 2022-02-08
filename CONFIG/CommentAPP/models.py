@@ -15,7 +15,7 @@ class ModelComment(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True,verbose_name="Oluşturulma Tarihi")
 
     def __str__(self):
-        return f"{self.unique_id}"
+        return f"{self.user.username} {self.unique_id}"
 
     @property
     def any_children(self):
@@ -23,6 +23,9 @@ class ModelComment(models.Model):
 
     def children(self):
         return ModelComment.objects.filter(parent=self)
+
+    def delete_all_children(self):
+        ModelComment.objects.filter(parent=self).delete()
 
     class Meta:
         verbose_name        = "Yorum"

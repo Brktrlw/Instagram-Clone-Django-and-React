@@ -2,10 +2,9 @@ from rest_framework.generics import ListAPIView,CreateAPIView,DestroyAPIView
 from CommentAPP.models import ModelComment
 from .serializers import SerializerCommentListByPost,SerializerCreateComment,SerializerDeleteComment
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsFollowing
+from .permissions import IsFollowing,IsOwner
 from PostAPP.models import ModelPost
 from django.shortcuts import get_object_or_404
-
 
 class CommentListByPostAPIView(ListAPIView): # Herhangibir postun yorumlarını çeker
     serializer_class   = SerializerCommentListByPost
@@ -24,8 +23,14 @@ class CreateCommentAPIView(CreateAPIView):    # yorum yapma view
 
 class DeleteCommentAPIView(DestroyAPIView):
     queryset           = ModelComment.objects.all()
-    lookup_field       = "commentunique_id"
+    lookup_field       = "unique_id"
+    permission_classes = [IsAuthenticated,IsOwner]
     serializer_class   = SerializerDeleteComment
+
+    def perform_destroy(self, instance):
+        if instance.any_children:          # yorumun childları varsa yorum silinirken onları da siler
+            instance.delete_all_children()
+        instance.delete()
 
 
 

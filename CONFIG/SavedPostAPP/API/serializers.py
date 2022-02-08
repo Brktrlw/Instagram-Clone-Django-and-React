@@ -6,12 +6,17 @@ from LikeAPP.models import ModelPostLike
 
 
 class SerializerSavedPost(serializers.ModelSerializer):
-    username    = serializers.CharField(source="user.username")
-    createdDate = serializers.SerializerMethodField()
-    totalLike   = serializers.SerializerMethodField()
+    username     = serializers.CharField(source="user.username")
+    createdDate  = serializers.SerializerMethodField()
+    totalLike    = serializers.SerializerMethodField()
+    modifiedDate = serializers.SerializerMethodField()
 
     def get_createdDate(self, obj):
         tarih = datetime.strftime(obj.createdDate, '%H:%M:%S %d/%m/%Y')
+        return str(tarih)
+
+    def get_modifiedDate(self, obj):
+        tarih = datetime.strftime(obj.modifiedDate, '%H:%M:%S %d/%m/%Y')
         return str(tarih)
 
     def get_totalLike(self,obj):
@@ -19,12 +24,20 @@ class SerializerSavedPost(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelPost
-        fields = ("username","createdDate","images","unique_id","totalLike")
+        fields = ("username","title","images","createdDate","modifiedDate","totalLike","unique_id",)
+
 
 class SerializerSavedUserPost(serializers.ModelSerializer):
     post = SerializerSavedPost()
     class Meta:
         model  = ModelSavedPost
         fields = ("post",)
+
+
+class SerializerCreateSavePost(serializers.ModelSerializer):
+
+    class Meta:
+        model  = ModelSavedPost
+        fields = ("user",)
 
 

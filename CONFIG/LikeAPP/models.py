@@ -42,4 +42,3 @@ def whenLikePost(sender,instance,*args,**kwargs):
     # Eğer kullanıcı postu beğenmiş ise veritabanından beğeniyi siliyoruz
     if isLiked.count()==2:
         isLiked.delete()
-

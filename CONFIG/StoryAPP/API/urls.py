@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import UserStoriesListAPIView
+from .views import UserCurrentStoriesListAPIView
 
 
 app_name="stories"
 urlpatterns = [
-    path('<str:user__username>/',UserStoriesListAPIView.as_view()),
+    path('<str:user__username>/',UserCurrentStoriesListAPIView.as_view()),
 ]
 
 

@@ -14,7 +14,7 @@ class UserFollowersAPIView(ListAPIView):
 
 
 class UserFollowingAPIView(ListAPIView):
-    # kullanıcınına dına göre takip ettiklerini döndürür
+    # kullanıcının adına göre takip ettiklerini döndürür
     serializer_class   = SerializerUserFollowings
     permission_classes = [IsAuthenticated, IsFollowing]
 

@@ -6,6 +6,7 @@ from LikeAPP.models import ModelPostLike
 
 
 class SerializerSavedPost(serializers.ModelSerializer):
+    # kayıtlı postları serilize etmek için kullandığımız serializer
     username     = serializers.CharField(source="user.username")
     createdDate  = serializers.SerializerMethodField()
     totalLike    = serializers.SerializerMethodField()
@@ -28,6 +29,7 @@ class SerializerSavedPost(serializers.ModelSerializer):
 
 
 class SerializerSavedUserPost(serializers.ModelSerializer):
+    # Kullanıcının kayıtlı postlarını listelediğimiz view
     post = SerializerSavedPost()
     class Meta:
         model  = ModelSavedPost
@@ -35,7 +37,7 @@ class SerializerSavedUserPost(serializers.ModelSerializer):
 
 
 class SerializerCreateSavePost(serializers.ModelSerializer):
-
+    # Savedlara post eklemek için kullandığımız serializer
     class Meta:
         model  = ModelSavedPost
         fields = ("user",)

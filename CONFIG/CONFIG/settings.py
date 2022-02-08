@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'LikeAPP',
     'NotificationAPP',
     'SavedPostAPP',
+    'StoryAPP',
     #Other App
     'django_cleanup',
     'rest_framework',

@@ -5,6 +5,8 @@ from django.contrib.auth.admin import UserAdmin
 from CommentAPP.models import ModelComment
 from LikeAPP.models import ModelCommentLike,ModelPostLike
 from SavedPostAPP.models import ModelSavedPost
+from StoryAPP.models import ModelStory
+
 
 @admin.register(ModelPost)
 class PostAdmin(admin.ModelAdmin):
@@ -36,3 +38,4 @@ admin.site.register(ModelComment)
 admin.site.register(ModelCommentLike)
 admin.site.register(ModelPostLike)
 admin.site.register(ModelSavedPost)
+admin.site.register(ModelStory)

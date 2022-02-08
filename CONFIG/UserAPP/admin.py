@@ -23,6 +23,9 @@ class CustomUserAdmin(UserAdmin):
         }),
         ("Gizlilik Durumu", {
             "fields": ["private"],
+        }),
+        ("Biyogrofi ", {
+            "fields": ["biography"],
         })
     )
 admin.site.register(ModelUser,CustomUserAdmin)

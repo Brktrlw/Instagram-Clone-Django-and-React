@@ -3,9 +3,9 @@ from StoryAPP.models import ModelStory
 from datetime import datetime
 
 
-
-
 class SerializerUserStories(serializers.ModelSerializer):
+    # Kullanıcının adına göre hikayelerini listeleyen serializer
+
     username    = serializers.CharField(source="user.username")
     createdDate = serializers.SerializerMethodField()
 

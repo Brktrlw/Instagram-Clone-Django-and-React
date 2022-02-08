@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from UserAPP.models import ModelUser,ModelFollower
-import datetime
-from StoryAPP.models import ModelStory
-from django.utils import timezone
+
 
 
 class SerializerUserFollowers(serializers.ModelSerializer):

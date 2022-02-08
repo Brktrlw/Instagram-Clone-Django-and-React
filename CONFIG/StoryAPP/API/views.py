@@ -1,18 +1,17 @@
 from rest_framework.generics import ListAPIView
-from StoryAPP.models import ModelStory
 from .serializers import SerializerUserStories
-import datetime
-from django.utils import timezone
+from UserAPP.models import ModelUser
+from django.shortcuts import get_object_or_404
 
 class UserCurrentStoriesListAPIView(ListAPIView):
-    # Kullanıcının hikayelerini gösterir
+    # Kullanıcının adına göre hikayelerini listeler
     serializer_class = SerializerUserStories
 
     lookup_field = "user__username"
     def get_queryset(self):
-        # son 24 saatteki hikayeleri döndürür
-        date_from = timezone.now() - datetime.timedelta(days=1)
-        return ModelStory.objects.filter(user__username=self.kwargs["user__username"],createdDate__gte=date_from)
+        # kullanıcının username'ine göre son 24 saatteki hikayelerini döndürür
+        user = get_object_or_404(ModelUser,username=self.kwargs["user__username"])
+        return user.get_current_stories()
 
 
 

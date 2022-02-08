@@ -17,9 +17,21 @@ class SerializerCommentListByPost(serializers.ModelSerializer):   #Postun yoruml
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","createdDate","replies")
+        fields = ("user","text","createdDate","replies","unique_id")
 
 class SerializerCreateComment(serializers.ModelSerializer):   # yorum oluşturma view
     class Meta:
         model  = ModelComment
-        fields = ("text","parent")
+        fields = ("text","parent",)
+
+    def validate(self, attrs): # child yorumun postu ile parent yorumun postu aynı mı kontrol işlemi
+        if attrs["parent"]:
+            if attrs["parent"].post != self.context["view"].kwargs["postunique_id"]:
+                raise serializers.ValidationError("Postlar farklı")
+        return attrs
+
+
+class SerializerDeleteComment(serializers.ModelSerializer):
+    class Meta:
+        model  = ModelComment
+        fields = ("user",)

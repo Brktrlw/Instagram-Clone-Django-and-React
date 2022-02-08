@@ -16,7 +16,7 @@ class SerializerUserFollowings(serializers.ModelSerializer):
         model  = ModelFollower
         fields = ("following","totalFollower")
 
-class SerializerUserProfile(serializers.ModelSerializer):
+class SerializerUserProfile(serializers.ModelSerializer): # Kullanıcının profil bilgilerini gönderdiğimiz serializer
     totalFollowers  = serializers.SerializerMethodField()
     totalFollowings = serializers.SerializerMethodField()
 

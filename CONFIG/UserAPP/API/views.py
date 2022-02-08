@@ -21,6 +21,7 @@ class UserFollowingAPIView(ListAPIView):
         return self.request.user.followings.all()
 
 class UserProfileAPIView(ListAPIView):
+    # Kullanıcının profil bilgilerini gönderdiğimiz serializer
     serializer_class   = SerializerUserProfile
 
     def get_queryset(self):

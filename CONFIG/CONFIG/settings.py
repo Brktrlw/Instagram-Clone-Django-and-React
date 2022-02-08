@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     #My App
     'UserAPP',
     'PostAPP',
+    'CommentAPP',
     #Other App
     'django_cleanup',
     'rest_framework',

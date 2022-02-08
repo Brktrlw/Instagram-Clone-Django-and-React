@@ -25,11 +25,7 @@ class SerializerUserProfile(serializers.ModelSerializer):
     isAnyStory      = serializers.SerializerMethodField()
 
     def get_isAnyStory(self,obj):
-        # son 24 saatte hikayesi olup olmadığını kontrol eder
-        date_from               = timezone.now() - datetime.timedelta(days=1)
-        isCurrentStoryAvilable  = ModelStory.objects.filter(user=obj,createdDate__gte=date_from).exists()
-        return isCurrentStoryAvilable
-
+        return obj.is_any_story()
 
     def get_totalFollowers(self,obj):
         return obj.followers.count()

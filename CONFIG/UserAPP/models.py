@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import datetime
+from django.utils import timezone
 
 class ModelUser(AbstractUser):
     profilePhoto = models.ImageField(upload_to="profilePhoto",blank=True,null=True,verbose_name="Profil Fotoğrafı")
@@ -10,6 +11,10 @@ class ModelUser(AbstractUser):
     def __str__(self):
         return self.username
 
+    def is_any_story(self):
+        # kullanıcının o an aktif halde olan hikayesi var mı yok mu True/False döndürürUU
+        date_from = timezone.now() - datetime.timedelta(days=1)
+        return self.stories.filter(user=self,createdDate__gte=date_from).exists()
 
 
 class ModelFollower(models.Model):

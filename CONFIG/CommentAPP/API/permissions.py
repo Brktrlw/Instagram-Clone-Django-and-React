@@ -21,7 +21,6 @@ class IsOwner(BasePermission):
     message = "You must be the owner this object for any process"
 
     def has_object_permission(self, request, view, obj):
-        print(obj.post.user)
         return (obj.post.user == request.user) or (obj.user == request.user)
         # silinecek yorumun postunun sahibi ile silmek isteyen kullanıcı aynı ise True döndürür
         # OR

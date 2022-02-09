@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/user/', include("UserAPP.API.urls", namespace="user"), name="url_user"),
     path('api/savedpost/', include("SavedPostAPP.API.urls", namespace="savedpost"), name="url_savedpost"),
     path('api/story/', include("StoryAPP.API.urls", namespace="stories"), name="url_stories"),
+    path('api/like/', include("LikeAPP.API.urls", namespace="likes"), name="url_likes"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

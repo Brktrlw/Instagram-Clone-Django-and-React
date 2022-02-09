@@ -8,7 +8,8 @@ class IsOwner(BasePermission):
     def has_object_permission(self, request, view, obj):
         return (obj.user == request.user)#or request.user.is_superuser
 
-class IsFollowing(BasePermission):      # Kullanıcı takip ediyorsa postları gösterir,eğer takip etmiyorsa VE gizli hesapsa göstermez.
+class IsFollowing(BasePermission):
+    # Kullanıcı takip ediyorsa postları gösterir,eğer takip etmiyorsa VE gizli hesapsa göstermez.
     message="Kullanıcının profili gizli"
     def has_permission(self, request, view):
         auth_user   = request.user

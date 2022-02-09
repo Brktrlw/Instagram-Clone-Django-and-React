@@ -19,12 +19,15 @@ class ModelComment(models.Model):
 
     @property
     def any_children(self):
+        # Yorumun herhangi bir alt yorumunun olup olmadığını True false olarak döndürür
         return ModelComment.objects.filter(parent=self).exists()
 
     def children(self):
+        # Yorumun alt yorumlarını döndüren method
         return ModelComment.objects.filter(parent=self)
 
     def delete_all_children(self):
+        # Bir yorum silinirken onun altındaki diğer yorumları da siler
         ModelComment.objects.filter(parent=self).delete()
 
     class Meta:

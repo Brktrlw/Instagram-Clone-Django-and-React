@@ -17,6 +17,10 @@ class SerializerCommentLikesList(serializers.ModelSerializer):
         model  = ModelCommentLike
         fields = ("username",)
 
+class SerializerPostLike(serializers.ModelSerializer):
 
+    class Meta:
+        model  = ModelPostLike
+        fields = ("user",)
 
 

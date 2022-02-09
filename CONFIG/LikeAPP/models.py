@@ -37,7 +37,7 @@ class ModelPostLike(models.Model):
         db_table            = "PostLikes"
 
 @receiver(post_save,sender=ModelPostLike)
-def whenLikePost(sender,instance,*args,**kwargs):
+def whenPostIsLiked(sender,instance,*args,**kwargs):
     isLiked = ModelPostLike.objects.filter(user=instance.user,post=instance.post)
     # Eğer kullanıcı postu beğenmiş ise beğeniyi veritabanından siliyoruz
     if isLiked.count()==2:

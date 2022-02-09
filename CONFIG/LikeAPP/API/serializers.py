@@ -4,7 +4,6 @@ from LikeAPP.models import ModelPostLike,ModelCommentLike
 class SerializerPostLikesList(serializers.ModelSerializer):
     # Post ID'sine göre o postu beğenen kullanıcıların nickname'ini döndürür
     username=serializers.CharField(source="user.username")
-
     class Meta:
         model  = ModelPostLike
         fields = ("username",)
@@ -12,15 +11,18 @@ class SerializerPostLikesList(serializers.ModelSerializer):
 class SerializerCommentLikesList(serializers.ModelSerializer):
     # Yorum ID'sine göre o yorumu beğenen kullanıcıların nickname'ini döndürür
     username =serializers.CharField(source="user.username")
-
     class Meta:
         model  = ModelCommentLike
         fields = ("username",)
 
 class SerializerPostLike(serializers.ModelSerializer):
-
+    # postu beğenmeye,beğeni varsa beğeniyi silmeye yarayan serializer
     class Meta:
         model  = ModelPostLike
         fields = ("user",)
 
-
+class SerializerCommentLike(serializers.ModelSerializer):
+    # Yorumu beğenmeye,beğeni varsa beğeniyi silmeye yarayan serializer
+    class Meta:
+        model  = ModelCommentLike
+        fields = ("user",)

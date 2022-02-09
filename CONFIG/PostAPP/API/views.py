@@ -9,33 +9,39 @@ from django.db.models import Q
 
 
 class PostCreateAPIView(CreateAPIView):
+    # Post olurşturma view
     queryset         = ModelPost.objects.all()
     serializer_class = SerializerPostCreateDelete
 
-    def perform_create(self, serializer):       # Post kayıt edilirken kullanıcıyı giriş yapmış kullanıcı olarak ayarlıyoruz
+    def perform_create(self, serializer):
+        # Post kayıt edilirken kullanıcıyı giriş yapmış kullanıcı olarak ayarlıyoruz
         user = ModelUser.objects.filter(username="admin")
         serializer.save(user=user)
 
-class DeletePostAPIView(DestroyAPIView):        # postsilme işlemi
+class DeletePostAPIView(DestroyAPIView):
+    # Post silme işlemi
     queryset           = ModelPost.objects.all()
     serializer_class   = SerializerPostCreateDelete
     lookup_field       = "unique_id"
     permission_classes = [IsAuthenticated,IsOwner]
 
-class UpdatePostAPIView(UpdateAPIView):        #postları güncellerken kullandıgımız view
+class UpdatePostAPIView(UpdateAPIView):
+    #postları güncellerken kullandıgımız view
     lookup_field       = "unique_id"
     serializer_class   =  SerializerPostUpdate
     permission_classes = [IsAuthenticated,IsOwner]
     queryset           = ModelPost.objects.all()
 
-class OwnPostListAPIView(ListAPIView):           # giriş yapmış olan kullanıcının postları
+class OwnPostListAPIView(ListAPIView):
+    # giriş yapmış olan kullanıcının postları
     serializer_class   = SerializerOwnPostList
     permission_classes = [IsAuthenticated]
     #pagination_class = []
     def get_queryset(self):
         return ModelPost.objects.filter(user=self.request.user)
 
-class FollowersPostListAPIView(ListAPIView): # Ana sayfada sadece takip ettiğimiz kullanıcıların postlarının yayınlandığı view
+class FollowersPostListAPIView(ListAPIView):
+    # Ana sayfada sadece takip ettiğimiz kullanıcıların postlarının yayınlandığı view
     serializer_class = SerializerFollowersPostList
     permission_classes = [IsAuthenticated]
 
@@ -44,7 +50,8 @@ class FollowersPostListAPIView(ListAPIView): # Ana sayfada sadece takip ettiğim
         posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("-createdDate")
         return posts
 
-class UserPostListAPIView(ListAPIView): # Herhangi bir kullanıcının profilinin görüntülenmesinde görev alır.
+class UserPostListAPIView(ListAPIView):
+    #Herhangi bir kullanıcının profilinin görüntülenmesinde görev alır. KULLANICI ADINA GÖRE
     serializer_class = SerializerUserPostList
     permission_classes = [IsFollowing]
 

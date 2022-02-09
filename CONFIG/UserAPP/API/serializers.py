@@ -36,4 +36,12 @@ class SerializerUserProfile(serializers.ModelSerializer):
         fields = ("username","totalFollowers","totalFollowings","biography","isAnyStory","profilePhoto")
 
 
+class SerializerUserSimpleInfo(serializers.ModelSerializer):
+    isAnyStory      = serializers.SerializerMethodField()
+
+    def get_isAnyStory(self,obj):
+        return obj.is_any_story()
+    class Meta:
+        model  = ModelUser
+        fields = ("username","isAnyStory")
 

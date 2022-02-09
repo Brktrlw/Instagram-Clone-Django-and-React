@@ -1,11 +1,21 @@
 from rest_framework import serializers
 from CommentAPP.models import ModelComment
 from datetime import datetime
+from UserAPP.API.serializers import SerializerUserSimpleInfo
+from LikeAPP.models import ModelCommentLike
 
 class SerializerCommentListByPost(serializers.ModelSerializer):   #Postun yorumlarını listelediğimiz serializer
-    user        = serializers.CharField(source="user.username")
     replies     = serializers.SerializerMethodField()
     createdDate = serializers.SerializerMethodField()
+    user        = SerializerUserSimpleInfo()
+    isLiked     = serializers.SerializerMethodField()
+
+    def get_isLiked(self,obj):
+        try:
+            return ModelCommentLike.objects.filter(user=self.context.get("request").user,comment=obj).exists()
+        except:
+            print("HATA")
+            return False
 
     def get_createdDate(self, obj):
         tarih = datetime.strftime(obj.createdDate, '%d/%m/%Y %H:%M:%S')
@@ -13,11 +23,11 @@ class SerializerCommentListByPost(serializers.ModelSerializer):   #Postun yoruml
 
     def get_replies(self, obj):
         if obj.any_children:
-            return SerializerCommentListByPost(obj.children(),many=True).data
+            return SerializerCommentListByPost(obj.children(),many=True,context={"request":self.context["request"]}).data
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","createdDate","unique_id","replies")
+        fields = ("user","text","isLiked","createdDate","unique_id","replies",)
 
 class SerializerCreateComment(serializers.ModelSerializer):   # yorum oluşturma view
     class Meta:

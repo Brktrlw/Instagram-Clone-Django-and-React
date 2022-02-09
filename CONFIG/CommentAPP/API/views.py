@@ -10,8 +10,10 @@ class CommentListByPostAPIView(ListAPIView):
     # Herhangi bir postun yorumlarını çeker
     serializer_class   = SerializerCommentListByPost
     permission_classes = [IsAuthenticated,IsFollowing]
+
     def get_queryset(self):
         return ModelComment.objects.filter(post__unique_id=self.kwargs.get("postunique_id"),parent=None)
+
 
 class CreateCommentAPIView(CreateAPIView):
     # Yorum yapma işlemi view

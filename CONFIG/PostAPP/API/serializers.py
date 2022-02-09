@@ -45,10 +45,15 @@ class SerializerUserPostList(serializers.ModelSerializer):
     createdDate  = serializers.SerializerMethodField()
     modifiedDate = serializers.SerializerMethodField()
     isLiked      = serializers.SerializerMethodField()
-
+    ratio         = serializers.SerializerMethodField()
     def get_isLiked(self,obj):
         return ModelPostLike.objects.filter(post=obj,user=self.context["request"].user).exists()
 
+    def get_ratio(self,obj):
+        try:
+            return obj.images.width / obj.images.height
+        except:
+            return None
     def get_createdDate(self, obj):
         tarih = datetime.strftime(obj.createdDate, '%H:%M:%S %d/%m/%Y')
         return str(tarih)
@@ -59,7 +64,7 @@ class SerializerUserPostList(serializers.ModelSerializer):
 
     class Meta:
         model = ModelPost
-        fields = ("title", "images","isLiked", "createdDate","modifiedDate", "unique_id")
+        fields = ("unique_id","title", "images","isLiked","ratio", "createdDate","modifiedDate")
 
 
 

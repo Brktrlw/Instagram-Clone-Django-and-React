@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class ModelUser(AbstractUser):
-    date_from = timezone.now() - datetime.timedelta(days=1)
+    date_from    = timezone.now() - datetime.timedelta(days=1)
     profilePhoto = models.ImageField(upload_to="profilePhoto",blank=True,null=True,verbose_name="Profil Fotoğrafı")
     private      = models.BooleanField(default=False,verbose_name="Gizli Hesap mı")
     biography    = models.CharField(max_length=100,verbose_name="Biyogrofi",null=True,blank=True)

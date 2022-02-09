@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from UserAPP.models import ModelFollower
-from NotificationAPP.models import ModelNotification,ModelRequest
+from NotificationAPP.models import ModelRequest
 
 class SerializerFollow(serializers.ModelSerializer):
     receiver_user = serializers.CharField(source="follower.username")

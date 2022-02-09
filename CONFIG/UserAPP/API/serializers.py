@@ -33,7 +33,7 @@ class SerializerUserProfile(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelUser
-        fields = ("username","totalFollowers","totalFollowings","biography","isAnyStory")
+        fields = ("username","totalFollowers","totalFollowings","biography","isAnyStory","profilePhoto")
 
 
 

@@ -24,7 +24,7 @@ class UserFollowingAPIView(ListAPIView):
 class UserProfileAPIView(ListAPIView):
     # Kullanıcının profil bilgilerini gönderdiğimiz serializer
     serializer_class   = SerializerUserProfile
-
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         return ModelUser.objects.filter(username=self.kwargs.get("user__username"))
 

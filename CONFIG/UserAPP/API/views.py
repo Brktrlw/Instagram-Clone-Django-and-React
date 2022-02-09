@@ -27,3 +27,10 @@ class UserProfileAPIView(ListAPIView):
 
     def get_queryset(self):
         return ModelUser.objects.filter(username=self.kwargs.get("user__username"))
+
+
+
+
+
+
+

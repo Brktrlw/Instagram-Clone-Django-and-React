@@ -3,9 +3,9 @@ from django.contrib.auth.models import AbstractUser
 import datetime
 from django.utils import timezone
 
+
 class ModelUser(AbstractUser):
     date_from = timezone.now() - datetime.timedelta(days=1)
-
     profilePhoto = models.ImageField(upload_to="profilePhoto",blank=True,null=True,verbose_name="Profil Fotoğrafı")
     private      = models.BooleanField(default=False,verbose_name="Gizli Hesap mı")
     biography    = models.CharField(max_length=100,verbose_name="Biyogrofi",null=True,blank=True)
@@ -19,7 +19,6 @@ class ModelUser(AbstractUser):
 
     def is_any_story(self):
         # kullanıcının o an aktif halde olan hikayesi var mı yok mu True/False döndürür
-
         return self.stories.filter(user=self,createdDate__gte=self.date_from).exists()
 
 
@@ -33,4 +32,3 @@ class ModelFollower(models.Model):
 
     def __str__(self):
         return f"Takip Eden: {self.following} Takip Edilen: {self.follower}"
-

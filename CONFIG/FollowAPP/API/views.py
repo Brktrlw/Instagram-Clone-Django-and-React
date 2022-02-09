@@ -44,6 +44,21 @@ class CreateRequestFollowAPIView(CreateAPIView):
 
         serializer.save(receiver_user=receiver_user, sender_user=sender_user)  # Takipçilere ekler
 
+class UnRequestFollowAPIView(DestroyAPIView):
+    # Takip isteğini sil
+    lookup_field     = "follower__username"
+    serializer_class = SerializerCreateRequest
+    queryset         = ModelRequest.objects.all()
+
+    def get_object(self):
+        follower  = get_object_or_404(ModelUser,username=self.kwargs.get("follower__username"))
+        following = self.request.user
+        return get_object_or_404(ModelRequest,receiver_user=follower,sender_user=following)
+
+    def perform_destroy(self, instance):
+        ModelNotification.objects.filter(receiver_user=instance.receiver_user,sender_user=self.request.user,post=None).delete()
+        instance.delete()
+
 
 
 

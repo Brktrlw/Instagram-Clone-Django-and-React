@@ -13,3 +13,8 @@ class SerializerCreateRequest(serializers.ModelSerializer):
     class Meta:
         model  = ModelRequest
         fields = ("receiver_user",)
+
+
+
+
+

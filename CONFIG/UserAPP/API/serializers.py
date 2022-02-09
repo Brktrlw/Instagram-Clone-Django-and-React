@@ -37,7 +37,7 @@ class SerializerUserProfile(serializers.ModelSerializer):
 
 
 class SerializerUserSimpleInfo(serializers.ModelSerializer):
-    isAnyStory      = serializers.SerializerMethodField()
+    isAnyStory = serializers.SerializerMethodField()
 
     def get_isAnyStory(self,obj):
         return obj.is_any_story()

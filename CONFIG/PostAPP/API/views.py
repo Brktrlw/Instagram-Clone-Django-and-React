@@ -26,17 +26,17 @@ class DeletePostAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated,IsOwner]
 
 class UpdatePostAPIView(UpdateAPIView):
-    #postları güncellerken kullandıgımız view
+    # Postları güncellerken kullandıgımız view
     lookup_field       = "unique_id"
     serializer_class   =  SerializerPostUpdate
     permission_classes = [IsAuthenticated,IsOwner]
     queryset           = ModelPost.objects.all()
 
 class OwnPostListAPIView(ListAPIView):
-    # giriş yapmış olan kullanıcının postları
+    # Giriş yapmış olan kullanıcının postları
     serializer_class   = SerializerOwnPostList
     permission_classes = [IsAuthenticated]
-    #pagination_class = []
+    # pagination_class = []
     def get_queryset(self):
         return ModelPost.objects.filter(user=self.request.user)
 

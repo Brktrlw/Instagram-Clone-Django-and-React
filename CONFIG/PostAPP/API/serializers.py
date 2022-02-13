@@ -66,7 +66,6 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
         model  = ModelPost
         fields = ("user","unique_id","title","images","isLiked","ratio","createdDate","modifiedDate")
 
-
 class SerializerPostUpdate(serializers.ModelSerializer):
     # Postu güncellediğimiz serializer
     class Meta:
@@ -77,12 +76,12 @@ class SerializerUserPostList(serializers.ModelSerializer):
     #herhangi bir kullanıcının kullanıcı adına göre postlarını göstermeye yarar
     createdDate  = serializers.SerializerMethodField()
     modifiedDate = serializers.SerializerMethodField()
-    isLiked      = serializers.SerializerMethodField()
+    #isLiked      = serializers.SerializerMethodField()
     ratio        = serializers.SerializerMethodField()
     user         = SerializerUserSimpleInfo()
 
-    def get_isLiked(self,obj):
-        return ModelPostLike.objects.filter(post=obj,user=self.context["request"].user).exists()
+    #def get_isLiked(self,obj):
+    #    return ModelPostLike.objects.filter(post=obj,user=self.context["request"].user).exists()
 
     def get_ratio(self,obj):
         try:
@@ -100,7 +99,8 @@ class SerializerUserPostList(serializers.ModelSerializer):
 
     class Meta:
         model = ModelPost
-        fields = ("user","unique_id","title", "images","isLiked","ratio", "createdDate","modifiedDate")
+        #fields = ("user","unique_id","title", "images","isLiked","ratio", "createdDate","modifiedDate")
+        fields = ("user","unique_id","title", "images","ratio", "createdDate","modifiedDate")
 
 
 

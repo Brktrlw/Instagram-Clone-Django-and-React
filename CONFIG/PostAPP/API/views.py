@@ -53,7 +53,7 @@ class FollowersPostListAPIView(ListAPIView):
 class UserPostListAPIView(ListAPIView):
     #Herhangi bir kullanıcının profilinin görüntülenmesinde görev alır. KULLANICI ADINA GÖRE
     serializer_class = SerializerUserPostList
-    permission_classes = [IsFollowing]
+    #permission_classes = [IsFollowing]
 
     def get_queryset(self):
         return ModelPost.objects.filter(user__username=self.kwargs.get("user__username"))

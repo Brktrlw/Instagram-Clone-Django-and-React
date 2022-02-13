@@ -3,6 +3,8 @@ from UserAPP.models import ModelUser
 from django.utils.crypto import get_random_string
 
 
+
+
 def create_new_ref_number():
     return str("story")+str(get_random_string(30))
 
@@ -20,3 +22,6 @@ class ModelStory(models.Model):
     def __str__(self):
         return f"{self.user.username}"
 
+class ModelStoryRead(models.Model):
+    user  = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Gören Kullanıcı")
+    story = models.ForeignKey(ModelStory,on_delete=models.CASCADE,related_name="seeingusers",verbose_name="Hikaye")

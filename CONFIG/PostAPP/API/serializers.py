@@ -1,9 +1,12 @@
 from rest_framework import serializers
 from PostAPP.models import ModelPost
 from datetime import datetime
+from datetime import date
 from LikeAPP.models import ModelPostLike
 from UserAPP.API.serializers import SerializerUserSimpleInfo
 from CONFIG.tools import LOCAL_IP,PORT_NUMBER
+from django.utils.timesince import timesince
+
 
 class SerializerPostCreateDelete(serializers.ModelSerializer):
     # Post oluşturma serializer'ı
@@ -44,14 +47,16 @@ class SerializerOwnPostList(serializers.ModelSerializer):
 
 class SerializerFollowersPostList(serializers.ModelSerializer):
     # takipçilerimizin postlarının anasayfada listelendiği serializer
-    createdDate = serializers.SerializerMethodField()
     isLiked = serializers.SerializerMethodField()
     ratio = serializers.SerializerMethodField()
-    modifiedDate = serializers.SerializerMethodField()
     user=SerializerUserSimpleInfo()
     likeCount    = serializers.SerializerMethodField()
     commentCount = serializers.SerializerMethodField()
     postImage   =serializers.SerializerMethodField()
+    createdDate=serializers.SerializerMethodField()
+
+    def get_createdDate(self,obj):
+        return timesince(obj.createdDate)+" ago"
 
     def get_postImage(self,obj):
         return obj.get_image_url()
@@ -67,20 +72,13 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
         except:
             return None
 
-    def get_modifiedDate(self, obj):
-        tarih = datetime.strftime(obj.modifiedDate, '%H:%M:%S %d/%m/%Y')
-        return str(tarih)
-
     def get_isLiked(self, obj):
         return ModelPostLike.objects.filter(post=obj, user=self.context["request"].user).exists()
 
-    def get_createdDate(self, obj):
-        tarih = datetime.strftime(obj.createdDate, '%H:%M:%S %d/%m/%Y')
-        return str(tarih)
 
     class Meta:
         model  = ModelPost
-        fields = ("user","unique_id","title","postImage","isLiked","ratio","createdDate","modifiedDate","likeCount","commentCount")
+        fields = ("user","unique_id","title","postImage","isLiked","ratio","createdDate","likeCount","commentCount")
 
 class SerializerPostUpdate(serializers.ModelSerializer):
     # Postu güncellediğimiz serializer

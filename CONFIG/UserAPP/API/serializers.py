@@ -39,14 +39,21 @@ class SerializerUserProfile(serializers.ModelSerializer):
 class SerializerUserSimpleInfo(serializers.ModelSerializer):
     # Bazı kullanıcı bilgilerini verir
     isAnyStory = serializers.SerializerMethodField()
+    profilePicture=serializers.SerializerMethodField()
+
+    def get_profilePicture(self,obj):
+
+        return str(obj.get_profile_photo_url())
 
     def get_isAnyStory(self,obj):
         return obj.is_any_story()
+
     class Meta:
         model  = ModelUser
-        fields = ("username","isAnyStory")
+        fields = ("username","isAnyStory","profilePicture")
 
 class SerializerUserRegister(serializers.ModelSerializer):
+    # Kullanıcı kayıt olma işlemi
     class Meta:
         model = ModelUser
         fields=("username","first_name","last_name","password","profilePhoto")

@@ -8,7 +8,7 @@ def create_new_ref_number():
 
 class ModelComment(models.Model):
     user        = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Yorumu Atan")
-    unique_id   = models.CharField(max_length=10,unique=True,blank=True,default=create_new_ref_number,editable=False)
+    unique_id   = models.CharField(max_length=100,unique=True,blank=True,default=create_new_ref_number,editable=False)
     text        = models.CharField(max_length=200,verbose_name="Yorum içeriği")
     post        = models.ForeignKey(ModelPost,on_delete=models.CASCADE,verbose_name="Post",related_name="comments")
     parent      = models.ForeignKey("self",on_delete=models.CASCADE,null=True,blank=True,related_name="replies")

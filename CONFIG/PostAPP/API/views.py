@@ -5,7 +5,7 @@ from .permissions import IsOwner,IsFollowing
 from rest_framework.permissions import IsAuthenticated
 from UserAPP.models import ModelUser
 from django.db.models import Q
-
+from .paginations import HomePagePostPagination
 
 
 class PostCreateAPIView(CreateAPIView):
@@ -44,6 +44,7 @@ class FollowersPostListAPIView(ListAPIView):
     # Ana sayfada sadece takip ettiğimiz kullanıcıların postlarının yayınlandığı view
     serializer_class = SerializerFollowersPostList
     permission_classes = [IsAuthenticated]
+    pagination_class = HomePagePostPagination
 
     def get_queryset(self):
         myFollowings = self.request.user.followings.all().values_list('follower_id')

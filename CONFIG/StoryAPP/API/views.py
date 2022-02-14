@@ -23,7 +23,6 @@ class HomePageStoriesListAPIView(ListAPIView):
     # Ana sayfada kullanıcının takip ettiği kişilerin hikayelerini listeler
     serializer_class = SerializerHomePageStories
     def get_queryset(self):
-
         users    = self.request.user.followings.all().values_list('follower_id') # Kullanıcının takip ettiği kişileri listeye alıyoruz
         stories  = ModelStory.objects.filter(user_id__in=users,createdDate__gte=datefrom).order_by("user","-createdDate").distinct("user")
         return stories

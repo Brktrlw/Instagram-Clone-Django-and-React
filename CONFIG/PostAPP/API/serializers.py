@@ -49,6 +49,17 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
     ratio = serializers.SerializerMethodField()
     modifiedDate = serializers.SerializerMethodField()
     user=SerializerUserSimpleInfo()
+    likeCount    = serializers.SerializerMethodField()
+    commentCount = serializers.SerializerMethodField()
+    image   =serializers.SerializerMethodField()
+
+    def get_image(self,obj):
+        return obj.get_image_url()
+    def get_commentCount(self,obj):
+        return obj.comments.all().count()
+
+    def get_likeCount(self,obj):
+        return obj.likes.all().count()
 
     def get_ratio(self, obj):
         try:
@@ -69,7 +80,7 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelPost
-        fields = ("user","unique_id","title","images","isLiked","ratio","createdDate","modifiedDate")
+        fields = ("user","unique_id","title","image","isLiked","ratio","createdDate","modifiedDate","likeCount","commentCount")
 
 class SerializerPostUpdate(serializers.ModelSerializer):
     # Postu güncellediğimiz serializer

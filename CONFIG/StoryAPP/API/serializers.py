@@ -38,7 +38,7 @@ class SerializerHomePageStories(serializers.ModelSerializer):
 
     class Meta:
         model = ModelStory
-        fields=("username","profilePhoto","isAllRead")
+        fields=("username","profilePhoto","isAllRead","likeCount")
 
 
 class SerializerOwnStories(serializers.ModelSerializer):

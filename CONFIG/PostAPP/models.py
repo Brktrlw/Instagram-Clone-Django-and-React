@@ -1,7 +1,7 @@
 from django.db import models
 from UserAPP.models import ModelUser
 from django.utils.crypto import get_random_string
-
+from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 
 def create_new_ref_number():
     return str(get_random_string(30))
@@ -16,6 +16,9 @@ class ModelPost(models.Model):
 
     def __str__(self):
         return f"{self.user.username} {self.title}---{self.unique_id}"
+
+    def get_image_url(self):
+        return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.images.url
 
     class Meta:
         db_table            = "Posts"

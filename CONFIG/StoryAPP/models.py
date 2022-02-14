@@ -22,7 +22,7 @@ class ModelStory(models.Model):
         return f"{self.user.username}"
 
     def get_image_url(self):
-        return LOCAL_IP+":"+PORT_NUMBER+self.user.profilePhoto.url
+        return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.user.profilePhoto.url
 
 
 class ModelStoryRead(models.Model):

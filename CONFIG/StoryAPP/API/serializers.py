@@ -7,7 +7,6 @@ class SerializerUserStories(serializers.ModelSerializer):
     # Kullanıcının adına göre hikayelerini listeleyen serializer
     username    = serializers.CharField(source="user.username")
     createdDate = serializers.SerializerMethodField()
-
     def get_createdDate(self,obj):
         tarih = datetime.strftime(obj.createdDate, '%H:%M:%S %d/%m/%Y')
         return str(tarih)
@@ -21,7 +20,6 @@ class SerializerHomePageStories(serializers.ModelSerializer):
     # Ana sayfada kullanıcının takip ettiği kişilerin hikayelerini listeler
     username     = serializers.SerializerMethodField()
     profilePhoto = serializers.SerializerMethodField()
-    #timeAgo      = serializers.SerializerMethodField()
     isAllRead     = serializers.SerializerMethodField()
 
     def get_isAllRead(self,obj):
@@ -32,12 +30,8 @@ class SerializerHomePageStories(serializers.ModelSerializer):
             return True
         return False
 
-
     def get_username(self,obj):
         return obj.user.username
-
-    #def get_timeAgo(self,obj):
-    #    return timesince(obj.createdDate)
 
     def get_profilePhoto(self,obj):
         if obj.user.profilePhoto:
@@ -45,4 +39,4 @@ class SerializerHomePageStories(serializers.ModelSerializer):
 
     class Meta:
         model = ModelStory
-        fields=("username","profilePhoto","createdDate","isAllRead")
+        fields=("username","profilePhoto","isAllRead")

@@ -96,7 +96,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+SIMPLE_JWT={
+   'ACCESS_TOKEN_LIFETIME':timedelta(days=1)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

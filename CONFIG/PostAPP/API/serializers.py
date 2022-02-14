@@ -3,6 +3,7 @@ from PostAPP.models import ModelPost
 from datetime import datetime
 from LikeAPP.models import ModelPostLike
 from UserAPP.API.serializers import SerializerUserSimpleInfo
+from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 
 class SerializerPostCreateDelete(serializers.ModelSerializer):
     # Post oluşturma serializer'ı
@@ -12,10 +13,14 @@ class SerializerPostCreateDelete(serializers.ModelSerializer):
 
 class SerializerOwnPostList(serializers.ModelSerializer):
     # Kullanıcı kendi postlarını görüntülediği serializer
-    createdDate = serializers.SerializerMethodField()
-    isLiked     = serializers.SerializerMethodField()
-    ratio       = serializers.SerializerMethodField()
+    createdDate  = serializers.SerializerMethodField()
+    isLiked      = serializers.SerializerMethodField()
+    ratio        = serializers.SerializerMethodField()
     modifiedDate = serializers.SerializerMethodField()
+    image        = serializers.SerializerMethodField()
+
+    def get_image(self,obj):
+        return obj.get_image_url()
 
     def get_ratio(self,obj):
         try:
@@ -35,7 +40,7 @@ class SerializerOwnPostList(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelPost
-        fields = ("unique_id","title","images","isLiked","ratio","createdDate","modifiedDate")
+        fields = ("unique_id","title","image","isLiked","ratio","createdDate","modifiedDate")
 
 class SerializerFollowersPostList(serializers.ModelSerializer):
     # takipçilerimizin postlarının anasayfada listelendiği serializer

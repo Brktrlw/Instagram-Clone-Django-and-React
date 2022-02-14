@@ -51,9 +51,9 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
     user=SerializerUserSimpleInfo()
     likeCount    = serializers.SerializerMethodField()
     commentCount = serializers.SerializerMethodField()
-    image   =serializers.SerializerMethodField()
+    postImage   =serializers.SerializerMethodField()
 
-    def get_image(self,obj):
+    def get_postImage(self,obj):
         return obj.get_image_url()
     def get_commentCount(self,obj):
         return obj.comments.all().count()
@@ -80,7 +80,7 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelPost
-        fields = ("user","unique_id","title","image","isLiked","ratio","createdDate","modifiedDate","likeCount","commentCount")
+        fields = ("user","unique_id","title","postImage","isLiked","ratio","createdDate","modifiedDate","likeCount","commentCount")
 
 class SerializerPostUpdate(serializers.ModelSerializer):
     # Postu güncellediğimiz serializer

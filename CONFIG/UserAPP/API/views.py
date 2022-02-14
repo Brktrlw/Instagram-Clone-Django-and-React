@@ -1,6 +1,6 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView,CreateAPIView
 from UserAPP.models import ModelUser
-from .serializers import SerializerUserFollowers,SerializerUserFollowings,SerializerUserProfile
+from .serializers import SerializerUserFollowers,SerializerUserFollowings,SerializerUserProfile,SerializerUserRegister
 from rest_framework.permissions import IsAuthenticated
 from PostAPP.API.permissions import IsFollowing
 
@@ -28,7 +28,12 @@ class UserProfileAPIView(ListAPIView):
     def get_queryset(self):
         return ModelUser.objects.filter(username=self.kwargs.get("user__username"))
 
-
+class UserRegisterAPIView(CreateAPIView):
+    # Kullanıcı kayıt işlemi
+    serializer_class = SerializerUserRegister
+    queryset = ModelUser.objects.all()
+    def perform_create(self, serializer):
+        serializer.save(private=True)
 
 
 

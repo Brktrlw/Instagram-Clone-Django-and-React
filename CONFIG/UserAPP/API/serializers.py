@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from UserAPP.models import ModelUser,ModelFollower
-
+from django.contrib.auth.hashers import make_password
 
 
 class SerializerUserFollowers(serializers.ModelSerializer):
@@ -37,6 +37,7 @@ class SerializerUserProfile(serializers.ModelSerializer):
 
 
 class SerializerUserSimpleInfo(serializers.ModelSerializer):
+    # Bazı kullanıcı bilgilerini verir
     isAnyStory = serializers.SerializerMethodField()
 
     def get_isAnyStory(self,obj):
@@ -45,3 +46,15 @@ class SerializerUserSimpleInfo(serializers.ModelSerializer):
         model  = ModelUser
         fields = ("username","isAnyStory")
 
+class SerializerUserRegister(serializers.ModelSerializer):
+    class Meta:
+        model = ModelUser
+        fields=("username","first_name","last_name","password","profilePhoto")
+
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data.get('password'))
+        return super(SerializerUserRegister, self).create(validated_data)
+
+    def validate_password(self,value):
+        if len(value)<8:
+            raise serializers.ValidationError("Parola 8 karakterden fazla olmalıdır.")

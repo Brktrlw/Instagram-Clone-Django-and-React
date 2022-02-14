@@ -1,4 +1,3 @@
-
 from datetime import timedelta
 from pathlib import Path
 import os
@@ -81,10 +80,20 @@ WSGI_APPLICATION = 'CONFIG.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'instagram',
+        'USER': 'postgres',
+        'PASSWORD': 'b1e2r3k4a5y6',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -135,5 +144,3 @@ AUTH_USER_MODEL = "UserAPP.ModelUser"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 APPEND_SLASH = False
-
-

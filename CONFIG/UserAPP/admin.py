@@ -8,6 +8,14 @@ from SavedPostAPP.models import ModelSavedPost
 from StoryAPP.models import ModelStory,ModelStoryRead
 from NotificationAPP.models import ModelNotification,ModelRequest
 
+
+@admin.register(ModelStory)
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ["user","unique_id","createdDate"]
+    class Meta:
+        model = ModelStory
+
+
 @admin.register(ModelPost)
 class PostAdmin(admin.ModelAdmin):
     list_display = ["user","unique_id","createdDate"]  # admin tablosunda yazar ve olusturma tarihini göstermesini sağlar
@@ -38,7 +46,7 @@ admin.site.register(ModelComment)
 admin.site.register(ModelCommentLike)
 admin.site.register(ModelPostLike)
 admin.site.register(ModelSavedPost)
-admin.site.register(ModelStory)
+
 admin.site.register(ModelNotification)
 admin.site.register(ModelRequest)
 admin.site.register(ModelStoryRead)

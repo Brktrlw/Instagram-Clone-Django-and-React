@@ -40,3 +40,27 @@ class SerializerHomePageStories(serializers.ModelSerializer):
     class Meta:
         model = ModelStory
         fields=("username","profilePhoto","isAllRead")
+
+
+class SerializerOwnStories(serializers.ModelSerializer):
+    # Kullanıcı kendi hikayelerini listeler
+    image               = serializers.SerializerMethodField()
+    format_createdDate  = serializers.SerializerMethodField()
+
+    def get_image(self,obj):
+        return obj.get_image_url() # Model methodu
+
+    def get_format_createdDate(self,obj):
+        return obj.get_format_createdDate() # Model methodu
+
+    class Meta:
+        model = ModelStory
+        fields=("image","unique_id","format_createdDate")
+
+class SerializerCreateReadStory(serializers.ModelSerializer):
+    unique_id=serializers.CharField(source="story.unique_id")
+    class Meta:
+        model  = ModelStoryRead
+        fields = ("unique_id",)
+
+

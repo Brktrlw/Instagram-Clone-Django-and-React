@@ -2,6 +2,7 @@ from django.db import models
 from UserAPP.models import ModelUser
 from django.utils.crypto import get_random_string
 from CONFIG.tools import LOCAL_IP,PORT_NUMBER
+from django.utils.timesince import timesince
 
 def create_new_ref_number():
     return str("story")+str(get_random_string(30))
@@ -12,6 +13,8 @@ class ModelStory(models.Model):
     createdDate = models.DateTimeField(editable=False,auto_now_add=True)
     unique_id   = models.CharField(max_length=35,default=create_new_ref_number,editable=False, unique=True)
 
+    def get_format_createdDate(self):
+        return timesince(self.createdDate)+str(" önce")
 
     class Meta:
         verbose_name        = "Hikaye"
@@ -22,7 +25,7 @@ class ModelStory(models.Model):
         return f"{self.user.username}"
 
     def get_image_url(self):
-        return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.user.profilePhoto.url
+        return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.image.url
 
 
 class ModelStoryRead(models.Model):
@@ -31,3 +34,6 @@ class ModelStoryRead(models.Model):
 
     def __str__(self):
         return self.story.unique_id
+
+    class Meta:
+        db_table="StoryRead"

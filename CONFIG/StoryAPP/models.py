@@ -4,6 +4,9 @@ from django.utils.crypto import get_random_string
 from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 from django.utils.timesince import timesince
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 def create_new_ref_number():
     return str("story")+str(get_random_string(30))
 
@@ -37,3 +40,11 @@ class ModelStoryRead(models.Model):
 
     class Meta:
         db_table="StoryRead"
+
+
+@receiver(post_save,sender=ModelStoryRead)
+def whenReadStory(sender,instance,*args,**kwargs):
+    # Kullanıcı hikayeyi TEKRAR görüntülediğinde yenisinin eklenmemesini ama eskisinin de silinmemesini sağlıyoruz.
+    isRead = ModelStoryRead.objects.filter(user=instance.user,story=instance.story)
+    if isRead.count()==2:
+        isRead.first().delete()

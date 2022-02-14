@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from StoryAPP.models import ModelStory,ModelStoryRead
 from datetime import datetime
-from django.utils.timesince import timesince
 
 class SerializerUserStories(serializers.ModelSerializer):
     # Kullanıcının adına göre hikayelerini listeleyen serializer
@@ -58,9 +57,26 @@ class SerializerOwnStories(serializers.ModelSerializer):
         fields=("image","unique_id","format_createdDate")
 
 class SerializerCreateReadStory(serializers.ModelSerializer):
+    # Herhangi bir hikayeyi okumak için çalıştırdığımız serializer
     unique_id=serializers.CharField(source="story.unique_id")
     class Meta:
         model  = ModelStoryRead
         fields = ("unique_id",)
 
+class SerializerUsersBySeeingStory(serializers.ModelSerializer):
+    username=serializers.SerializerMethodField()
+    profilePhoto=serializers.SerializerMethodField()
+
+    def get_username(self,obj):
+        return obj.user.username
+
+    def get_profilePhoto(self,obj):
+        if obj.user.profilePhoto:
+            return obj.user.get_profile_photo_url()
+        return None
+
+
+    class Meta:
+        model  = ModelStoryRead
+        fields =("username","profilePhoto")
 

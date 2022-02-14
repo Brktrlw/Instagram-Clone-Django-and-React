@@ -1,12 +1,11 @@
 from rest_framework.generics import ListAPIView,CreateAPIView
-from .serializers import SerializerUserStories,SerializerHomePageStories,SerializerOwnStories,SerializerCreateReadStory
+from .serializers import SerializerUserStories,SerializerHomePageStories,SerializerOwnStories,SerializerCreateReadStory,SerializerUsersBySeeingStory
 from UserAPP.models import ModelUser
 from django.shortcuts import get_object_or_404
 from StoryAPP.models import ModelStory,ModelStoryRead
 from django.utils import timezone
 import datetime
 from rest_framework.permissions import IsAuthenticated
-
 
 
 datefrom = timezone.now() - datetime.timedelta(days=1)
@@ -45,9 +44,11 @@ class StorySeeingCreateAPIView(CreateAPIView):
         story=ModelStory.objects.get(unique_id=serializer.validated_data["story"].get("unique_id"))
         serializer.save(user=self.request.user,story=story)
 
+class UsersBySeeingStoryListAPIView(ListAPIView):
+    # Kullanıcı kendisinin paylaştığı bir hikayeyi unique_id'sine göre çekip onu izleyen kullanıcıları listeleme
+    serializer_class = SerializerUsersBySeeingStory
+    permission_classes = [IsAuthenticated,]
 
+    def get_queryset(self):
 
-
-
-
-
+        return ModelStoryRead.objects.filter(story__unique_id=self.kwargs.get("unique_id"),story__user_id=self.request.user.id)

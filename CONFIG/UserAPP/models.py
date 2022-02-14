@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
 from django.utils import timezone
+from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 
 
 class ModelUser(AbstractUser):
@@ -21,6 +22,8 @@ class ModelUser(AbstractUser):
         # kullanıcının o an aktif halde olan hikayesi var mı yok mu True/False döndürür
         return self.stories.filter(user=self,createdDate__gte=self.date_from).exists()
 
+    def get_profile_photo_url(self):
+        return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.profilePhoto.url
 
 class ModelFollower(models.Model):
     follower  = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Takip edilen",related_name="followers")

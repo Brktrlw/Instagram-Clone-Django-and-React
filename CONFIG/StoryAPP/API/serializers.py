@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from StoryAPP.models import ModelStory
+from StoryAPP.models import ModelStory,ModelStoryRead
 from datetime import datetime
+from django.utils.timesince import timesince
 
 class SerializerUserStories(serializers.ModelSerializer):
     # Kullanıcının adına göre hikayelerini listeleyen serializer
@@ -18,11 +19,25 @@ class SerializerUserStories(serializers.ModelSerializer):
 
 class SerializerHomePageStories(serializers.ModelSerializer):
     # Ana sayfada kullanıcının takip ettiği kişilerin hikayelerini listeler
-    username    = serializers.SerializerMethodField()
+    username     = serializers.SerializerMethodField()
     profilePhoto = serializers.SerializerMethodField()
+    #timeAgo      = serializers.SerializerMethodField()
+    isAllRead     = serializers.SerializerMethodField()
+
+    def get_isAllRead(self,obj):
+        # Giriş yapmış kullanıcı bir kullanıcının tüm hikayelerini görüp görmediğini döndürür
+        allStories = ModelStory.objects.filter(user=obj.user)
+        readObj    = ModelStoryRead.objects.filter(user=self.context["request"].user,story__in=allStories)
+        if allStories.count()==readObj.count():
+            return True
+        return False
+
 
     def get_username(self,obj):
         return obj.user.username
+
+    #def get_timeAgo(self,obj):
+    #    return timesince(obj.createdDate)
 
     def get_profilePhoto(self,obj):
         if obj.user.profilePhoto:
@@ -30,4 +45,4 @@ class SerializerHomePageStories(serializers.ModelSerializer):
 
     class Meta:
         model = ModelStory
-        fields=("username","profilePhoto")
+        fields=("username","profilePhoto","createdDate","isAllRead")

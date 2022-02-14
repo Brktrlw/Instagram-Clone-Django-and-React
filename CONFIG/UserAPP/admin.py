@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from CommentAPP.models import ModelComment
 from LikeAPP.models import ModelCommentLike,ModelPostLike
 from SavedPostAPP.models import ModelSavedPost
-from StoryAPP.models import ModelStory
+from StoryAPP.models import ModelStory,ModelStoryRead
 from NotificationAPP.models import ModelNotification,ModelRequest
 
 @admin.register(ModelPost)
@@ -41,5 +41,8 @@ admin.site.register(ModelSavedPost)
 admin.site.register(ModelStory)
 admin.site.register(ModelNotification)
 admin.site.register(ModelRequest)
+admin.site.register(ModelStoryRead)
+
+
 
 

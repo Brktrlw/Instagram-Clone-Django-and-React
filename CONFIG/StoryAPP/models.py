@@ -12,6 +12,7 @@ class ModelStory(models.Model):
     createdDate = models.DateTimeField(editable=False,auto_now_add=True)
     unique_id   = models.CharField(max_length=35,default=create_new_ref_number,editable=False, unique=True)
 
+
     class Meta:
         verbose_name        = "Hikaye"
         verbose_name_plural = "Hikayeler"
@@ -27,3 +28,6 @@ class ModelStory(models.Model):
 class ModelStoryRead(models.Model):
     user  = models.ForeignKey(ModelUser,on_delete=models.CASCADE,verbose_name="Gören Kullanıcı")
     story = models.ForeignKey(ModelStory,on_delete=models.CASCADE,related_name="seeingusers",verbose_name="Hikaye")
+
+    def __str__(self):
+        return self.story.unique_id

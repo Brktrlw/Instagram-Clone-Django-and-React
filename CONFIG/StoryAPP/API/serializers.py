@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from StoryAPP.models import ModelStory
 from datetime import datetime
-from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 
 class SerializerUserStories(serializers.ModelSerializer):
     # Kullanıcının adına göre hikayelerini listeleyen serializer
@@ -18,6 +17,7 @@ class SerializerUserStories(serializers.ModelSerializer):
 
 
 class SerializerHomePageStories(serializers.ModelSerializer):
+    # Ana sayfada kullanıcının takip ettiği kişilerin hikayelerini listeler
     username    = serializers.SerializerMethodField()
     profilePhoto = serializers.SerializerMethodField()
 

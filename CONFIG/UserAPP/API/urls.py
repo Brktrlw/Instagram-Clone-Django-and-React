@@ -8,6 +8,6 @@ urlpatterns = [
     path('followings/<str:user__username>', UserFollowingAPIView.as_view(),name="url_followings"),   # Kullanıcının takip ettikleri
     path('<str:user__username>', UserProfileAPIView.as_view(), name="url_user"),                     # Kullanıcının profil bilgileri
 
-    path("register/",UserRegisterAPIView.as_view(),name="url_register")                              # Kullanıcı kayıt işlemi
+    path("register/",UserRegisterAPIView.as_view(),name="url_register"),                             # Kullanıcı kayıt işlemi
 ]
 

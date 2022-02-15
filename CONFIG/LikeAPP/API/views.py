@@ -27,6 +27,7 @@ class PostLikeCreateDeleteAPIView(CreateAPIView):
     serializer_class   = SerializerPostLike
     queryset           = ModelPostLike.objects.all()
     permission_classes = [IsAuthenticated,IsFollowingOrOwnPost]
+
     def perform_create(self, serializer):
         post = get_object_or_404(ModelPost,unique_id=self.kwargs.get("unique_id"))
         serializer.save(user=self.request.user,post=post)

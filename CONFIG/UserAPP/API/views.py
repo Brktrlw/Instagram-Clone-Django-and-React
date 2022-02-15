@@ -5,6 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from PostAPP.API.permissions import IsFollowing
 
 
+
+
+
 class UserFollowersAPIView(ListAPIView):
     # kullanıcının adına göre takipçilerini döndürür
     serializer_class   = SerializerUserFollowers
@@ -34,8 +37,5 @@ class UserRegisterAPIView(CreateAPIView):
     queryset = ModelUser.objects.all()
     def perform_create(self, serializer):
         serializer.save(private=True)
-
-
-
 
 

@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from UserAPP.models import ModelUser
 from django.db.models import Q
 from .paginations import HomePagePostPagination
+from ipware import get_client_ip
+
 
 
 class PostCreateAPIView(CreateAPIView):
@@ -47,8 +49,10 @@ class FollowersPostListAPIView(ListAPIView):
     pagination_class = HomePagePostPagination
 
     def get_queryset(self):
+        ip = get_client_ip(self.request)
+        print(ip)
         myFollowings = self.request.user.followings.all().values_list('follower_id')
-        posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("-createdDate")
+        posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("createdDate")
         return posts
 
 class UserPostListAPIView(ListAPIView):

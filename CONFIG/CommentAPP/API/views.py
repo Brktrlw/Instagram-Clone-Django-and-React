@@ -5,14 +5,16 @@ from rest_framework.permissions import IsAuthenticated
 from .permissions import IsFollowing,IsOwner
 from PostAPP.models import ModelPost
 from django.shortcuts import get_object_or_404
+from .paginations import CommentPagination
 
 class CommentListByPostAPIView(ListAPIView):
     # Herhangi bir postun yorumlarını çeker
     serializer_class   = SerializerCommentListByPost
     permission_classes = [IsAuthenticated,IsFollowing]
+    pagination_class   = CommentPagination
 
     def get_queryset(self):
-        return ModelComment.objects.filter(post__unique_id=self.kwargs.get("postunique_id"),parent=None)
+        return ModelComment.objects.filter(post__unique_id=self.kwargs.get("postunique_id"),parent=None).order_by("-createdDate")
 
 
 class CreateCommentAPIView(CreateAPIView):

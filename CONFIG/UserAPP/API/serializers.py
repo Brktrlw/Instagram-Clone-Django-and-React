@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from UserAPP.models import ModelUser,ModelFollower
 from django.contrib.auth.hashers import make_password
-
+from rest_framework_simplejwt.tokens import RefreshToken,TokenError
 
 class SerializerUserFollowers(serializers.ModelSerializer):
     # kullanıcının adına göre takipçilerini döndürür
@@ -67,3 +67,6 @@ class SerializerUserRegister(serializers.ModelSerializer):
     def validate_password(self,value):
         if len(value)<8:
             raise serializers.ValidationError("Parola 8 karakterden fazla olmalıdır.")
+
+
+

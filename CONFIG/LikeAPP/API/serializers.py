@@ -17,6 +17,9 @@ class SerializerCommentLikesList(serializers.ModelSerializer):
 
 class SerializerPostLike(serializers.ModelSerializer):
     # postu beğenmeye,beğeni varsa beğeniyi silmeye yarayan serializer
+    user=serializers.SerializerMethodField(read_only=True)
+    def get_user(self,obj):
+        pass
     class Meta:
         model  = ModelPostLike
         fields = ("user",)

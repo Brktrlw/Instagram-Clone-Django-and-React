@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class SerializerUserFollowers(serializers.ModelSerializer):
+    # kullanıcının adına göre takipçilerini döndürür
     follower = serializers.CharField(source="following.username")
 
     class Meta:
@@ -11,6 +12,7 @@ class SerializerUserFollowers(serializers.ModelSerializer):
         fields = ("follower",)
 
 class SerializerUserFollowings(serializers.ModelSerializer):
+    # kullanıcının adına göre takip ettiklerini döndürür
     following = serializers.CharField(source="follower.username")
     class Meta:
         model  = ModelFollower

@@ -6,7 +6,7 @@ class IsOwner(BasePermission):
     message = "You must be the owner this object for any process"
 
     def has_object_permission(self, request, view, obj):
-        return (obj.user == request.user)#or request.user.is_superuser
+        return (obj.user == request.user)
 
 class IsFollowing(BasePermission):
     # Kullanıcı takip ediyorsa postları gösterir,eğer takip etmiyorsa VE gizli hesapsa göstermez.

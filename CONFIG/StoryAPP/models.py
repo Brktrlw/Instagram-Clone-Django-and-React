@@ -3,7 +3,6 @@ from UserAPP.models import ModelUser
 from django.utils.crypto import get_random_string
 from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 from django.utils.timesince import timesince
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 

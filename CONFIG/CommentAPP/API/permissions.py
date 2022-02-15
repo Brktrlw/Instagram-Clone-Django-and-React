@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404
 from UserAPP.models import ModelFollower
 from PostAPP.models import ModelPost
 
-class IsFollowing(BasePermission):      # Kullanıcı takip ediyorsa postların yorumlarını gösterir,eğer takip etmiyorsa VE gizli hesapsa göstermez.
+class IsFollowing(BasePermission):
+    # Kullanıcı takip ediyorsa postların yorumlarını gösterir,eğer takip etmiyorsa VE gizli hesapsa göstermez.
     message="Kullanıcının profili gizli"
     def has_permission(self, request, view):
         auth_user   = request.user

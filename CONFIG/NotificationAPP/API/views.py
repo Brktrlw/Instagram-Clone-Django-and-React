@@ -3,6 +3,7 @@ from .serializers import SerializerListNotification
 
 
 class NotificationListAPIView(ListAPIView):
+    # Kullanıcının tüm bildirimlerini listeler
     serializer_class = SerializerListNotification
 
     def get_queryset(self):

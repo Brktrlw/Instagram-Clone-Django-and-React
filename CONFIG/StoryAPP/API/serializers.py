@@ -64,6 +64,7 @@ class SerializerCreateReadStory(serializers.ModelSerializer):
         fields = ("unique_id",)
 
 class SerializerUsersBySeeingStory(serializers.ModelSerializer):
+    # Kullanıcı kendisinin paylaştığı bir hikayeyi unique_id'sine göre çekip onu izleyen kullanıcıları listeleme
     username=serializers.SerializerMethodField()
     profilePhoto=serializers.SerializerMethodField()
 

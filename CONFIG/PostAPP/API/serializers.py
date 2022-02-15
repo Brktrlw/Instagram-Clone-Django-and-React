@@ -1,10 +1,8 @@
 from rest_framework import serializers
 from PostAPP.models import ModelPost
 from datetime import datetime
-from datetime import date
 from LikeAPP.models import ModelPostLike
 from UserAPP.API.serializers import SerializerUserSimpleInfo
-from CONFIG.tools import LOCAL_IP,PORT_NUMBER
 from django.utils.timesince import timesince
 
 
@@ -47,19 +45,20 @@ class SerializerOwnPostList(serializers.ModelSerializer):
 
 class SerializerFollowersPostList(serializers.ModelSerializer):
     # takipçilerimizin postlarının anasayfada listelendiği serializer
-    isLiked = serializers.SerializerMethodField()
-    ratio = serializers.SerializerMethodField()
-    user=SerializerUserSimpleInfo()
+    isLiked      = serializers.SerializerMethodField()
+    ratio        = serializers.SerializerMethodField()
+    user         = SerializerUserSimpleInfo()
     likeCount    = serializers.SerializerMethodField()
     commentCount = serializers.SerializerMethodField()
-    postImage   =serializers.SerializerMethodField()
-    createdDate=serializers.SerializerMethodField()
+    postImage    = serializers.SerializerMethodField()
+    createdDate  = serializers.SerializerMethodField()
 
     def get_createdDate(self,obj):
         return timesince(obj.createdDate)+" ago"
 
     def get_postImage(self,obj):
         return obj.get_image_url()
+
     def get_commentCount(self,obj):
         return obj.comments.all().count()
 
@@ -90,7 +89,7 @@ class SerializerUserPostList(serializers.ModelSerializer):
     #herhangi bir kullanıcının kullanıcı adına göre postlarını göstermeye yarar
     createdDate  = serializers.SerializerMethodField()
     modifiedDate = serializers.SerializerMethodField()
-    #isLiked      = serializers.SerializerMethodField()
+    #isLiked     = serializers.SerializerMethodField()
     ratio        = serializers.SerializerMethodField()
     user         = SerializerUserSimpleInfo()
 

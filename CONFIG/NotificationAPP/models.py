@@ -1,7 +1,10 @@
 from django.db import models
 from UserAPP.models import ModelUser
 from PostAPP.models import ModelPost
+from django.utils.crypto import get_random_string
 
+def create_new_ref_number():
+    return "notif"+str(get_random_string(25))
 
 class ModelNotification(models.Model):
     NOTIFICATION_TYPE = (
@@ -15,6 +18,7 @@ class ModelNotification(models.Model):
     post             = models.ForeignKey(ModelPost,on_delete=models.CASCADE,verbose_name="Post",blank=True,null=True)
     createdDate      = models.DateTimeField(auto_now_add=True)
     isRead           = models.BooleanField(default=False)
+    unique_id        = models.CharField(max_length=30, default=create_new_ref_number, editable=False, unique=True)
 
     class Meta:
         verbose_name        = "Bildirim"

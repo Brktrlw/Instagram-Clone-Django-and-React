@@ -72,6 +72,7 @@ class DENEME_API(CreateAPIView):
         if followOBJ.exists():
             #takibi bırakma
             followOBJ.delete()
+            ModelNotification.objects.filter(receiver_user=receiverUser, sender_user=senderUser, notificationType="2").delete()
         else:
             #takip etme
             if receiverUser.private:
@@ -80,9 +81,11 @@ class DENEME_API(CreateAPIView):
                 if requestOBJ:
                     #istek zaten atmış ,isteği geri çekiyoruz
                     requestOBJ.delete()
+                    ModelNotification.objects.filter(receiver_user=receiverUser,sender_user=senderUser,notificationType="3").delete()
                 else:
                     #istek atmamış istek oluşturuyoruz
                     ModelRequest.objects.create(receiver_user=receiverUser, sender_user=senderUser)
+                    ModelNotification.objects.create(receiver_user=receiverUser,sender_user=senderUser,notificationType="3")
             else:
                 #gizli hesap değilse direkt takip ediyoruz
                 ModelFollower.objects.create(follower=receiverUser,following=senderUser)

@@ -1,5 +1,5 @@
 from rest_framework.generics import CreateAPIView,DestroyAPIView
-from .serializers import SerializerFollow,SerializerCreateRequest
+from .serializers import SerializerFollow,SerializerCreateRequest,SerializerDENEME
 from UserAPP.models import ModelFollower,ModelUser
 from django.shortcuts import get_object_or_404
 from NotificationAPP.models import ModelNotification,ModelRequest
@@ -32,6 +32,8 @@ class FollowUserAPIView(CreateAPIView):
         ModelNotification.objects.create(receiver_user=receiver_user,sender_user=sender_user,notificationType=2)
         serializer.save(follower=receiver_user,following=sender_user) # Takipçilere ekler
 
+
+
 class CreateRequestFollowAPIView(CreateAPIView):
     # gizli hesaba istek atma
     serializer_class =  SerializerCreateRequest
@@ -59,10 +61,31 @@ class UnRequestFollowAPIView(DestroyAPIView):
         ModelNotification.objects.filter(receiver_user=instance.receiver_user,sender_user=self.request.user,post=None).delete()
         instance.delete()
 
+class DENEME_API(CreateAPIView):
+    serializer_class = SerializerDENEME
+    queryset = ModelFollower.objects.all()
 
-
-
-
-
+    def perform_create(self, serializer):
+        senderUser   = self.request.user
+        receiverUser = get_object_or_404(ModelUser,username=serializer["receiver"].value)
+        followOBJ    = ModelFollower.objects.filter(follower=receiverUser,following=senderUser)
+        if followOBJ.exists():
+            #takibi bırakma
+            followOBJ.delete()
+        else:
+            #takip etme
+            if receiverUser.private:
+                #hesap gizliyse
+                requestOBJ=ModelRequest.objects.filter(receiver_user=receiverUser,sender_user=senderUser)
+                if requestOBJ:
+                    #istek zaten atmış ,isteği geri çekiyoruz
+                    requestOBJ.delete()
+                else:
+                    #istek atmamış istek oluşturuyoruz
+                    ModelRequest.objects.create(receiver_user=receiverUser, sender_user=senderUser)
+            else:
+                #gizli hesap değilse direkt takip ediyoruz
+                ModelFollower.objects.create(follower=receiverUser,following=senderUser)
+                ModelNotification.objects.create(receiver_user=receiverUser,sender_user=senderUser,notificationType="2")
 
 

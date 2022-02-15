@@ -10,10 +10,17 @@ class SerializerFollow(serializers.ModelSerializer):
 
 class SerializerCreateRequest(serializers.ModelSerializer):
     receiver_user = serializers.CharField(source="receiver_user.username")
+
     class Meta:
         model  = ModelRequest
         fields = ("receiver_user",)
 
+class SerializerDENEME(serializers.ModelSerializer):
+    receiver=serializers.CharField()
+
+    class Meta:
+        model  = ModelFollower
+        fields =("receiver",)
 
 
 

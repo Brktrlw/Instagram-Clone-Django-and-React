@@ -2,7 +2,7 @@ from rest_framework import serializers
 from CommentAPP.models import ModelComment
 from UserAPP.API.serializers import SerializerUserSimpleInfo
 from LikeAPP.models import ModelCommentLike
-from django.utils.timesince import timesince
+
 from CONFIG.tools import get_last_minute
 class SerializerCommentListByPost(serializers.ModelSerializer):
     #Postun yorumlarını listelediğimiz serializer

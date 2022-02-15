@@ -6,8 +6,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from NotificationAPP.models import ModelNotification
 
-
-
 class ModelCommentLike(models.Model):
     user    = models.ForeignKey(ModelUser,on_delete=models.CASCADE)
     comment = models.ForeignKey(ModelComment,on_delete=models.CASCADE,related_name="likes")

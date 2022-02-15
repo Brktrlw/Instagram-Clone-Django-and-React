@@ -26,6 +26,7 @@ class SerializerPostLike(serializers.ModelSerializer):
 
 class SerializerCommentLike(serializers.ModelSerializer):
     # Yorumu beğenmeye,beğeni varsa beğeniyi silmeye yarayan serializer
+    user=serializers.CharField(read_only=True)
     class Meta:
         model  = ModelCommentLike
         fields = ("user",)

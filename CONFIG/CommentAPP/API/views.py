@@ -23,9 +23,14 @@ class CreateCommentAPIView(CreateAPIView):
     serializer_class   = SerializerCreateComment
     permission_classes = [IsFollowing,IsAuthenticated]
 
-    def perform_create(self, serializer):
-        post = get_object_or_404(ModelPost,unique_id=self.kwargs.get("postunique_id"))
-        serializer.save(post=post,user=self.request.user)
+    #def perform_create(self, serializer):
+    #    post = get_object_or_404(ModelPost,unique_id=self.kwargs.get("postunique_id"))
+    #    parentUnique_id=serializer.validated_data.get("parent_unique_id")
+    #    if parentUnique_id:
+    #        parentComment=ModelComment.objects.get(unique_id=parentUnique_id)
+    #        serializer.save(post=post,user=self.request.user,parent=parentComment)
+    #    else:
+    #        serializer.save(post=post,user=self.request.user)
 
 class DeleteCommentAPIView(DestroyAPIView):
     # Yorum silme view

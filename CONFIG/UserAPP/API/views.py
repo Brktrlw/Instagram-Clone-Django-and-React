@@ -5,14 +5,13 @@ from rest_framework.permissions import IsAuthenticated
 from PostAPP.API.permissions import IsFollowing
 
 
-
 class WhenLoginUserAPIView(ListAPIView):
     # Giriş yaparken kullanıcı adı ve profil fotoğrafını gönderdiğimiz view
     serializer_class   = SerializerLoginUserInfo
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
+        #return ModelUser.objects.filter(username=self.request.user.username)
         return ModelUser.objects.filter(username=self.request.user.username)
-
 
 
 class UserFollowersAPIView(ListAPIView):

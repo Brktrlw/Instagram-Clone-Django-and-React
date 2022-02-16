@@ -2,6 +2,8 @@ from rest_framework import serializers
 from CommentAPP.models import ModelComment
 from UserAPP.API.serializers import SerializerUserSimpleInfo
 from LikeAPP.models import ModelCommentLike
+from PostAPP.models import ModelPost
+
 
 from CONFIG.tools import get_last_minute
 class SerializerCommentListByPost(serializers.ModelSerializer):
@@ -45,16 +47,28 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
 
 class SerializerCreateComment(serializers.ModelSerializer):
     # Yorum oluşturma view
+    parent_unique_id=serializers.CharField(required=False)
     class Meta:
         model  = ModelComment
-        fields = ("text","parent",)
+        fields = ("text","parent_unique_id",)
 
-    def validate(self, attrs):
-        # Child yorumun postu ile parent yorumun postu aynı mı kontrol işlemi
-        if attrs["parent"]:
-            if attrs["parent"].post != self.context["view"].kwargs["postunique_id"]:
-                raise serializers.ValidationError("Postlar farklı")
-        return attrs
+    def create(self, validated_data):
+        postobj = ModelPost.objects.get(unique_id=self.context['view'].kwargs.get('postunique_id'))
+
+        if validated_data.get("parent_unique_id") is not None:
+            #eğer varsa
+            comment=ModelComment.objects.get(unique_id=validated_data["parent_unique_id"],)
+            return ModelComment.objects.create(parent=comment,user=self.context["request"].user,text=validated_data["text"],post=postobj)
+        else:
+            #parent unique_id verilmeyince çalısıyor
+            return ModelComment.objects.create(user=self.context["request"].user, text=validated_data["text"],post=postobj,parent=None)
+
+    #def validate(self, attrs):
+    #    # Child yorumun postu ile parent yorumun postu aynı mı kontrol işlemi
+    #    if attrs["parent"]:
+    #        if attrs["parent"].post != self.context["view"].kwargs["postunique_id"]:
+    #            raise serializers.ValidationError("Postlar farklı")
+    #    return attrs
 
 
 class SerializerDeleteComment(serializers.ModelSerializer):

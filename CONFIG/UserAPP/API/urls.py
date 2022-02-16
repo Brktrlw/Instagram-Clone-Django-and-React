@@ -9,6 +9,6 @@ urlpatterns = [
     path('<str:user__username>', UserProfileAPIView.as_view(), name="url_user"),                     # Kullanıcının profil bilgileri
 
     path("register/",UserRegisterAPIView.as_view(),name="url_register"),                             # Kullanıcı kayıt işlemi
-    path("credentials/",WhenLoginUserAPIView.as_view(),) # giriş yaparken gönderilen bilgiler
+    path("credentials/",WhenLoginUserAPIView.as_view(),), # giriş yaparken gönderilen bilgiler
 ]
 

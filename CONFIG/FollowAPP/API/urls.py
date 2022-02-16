@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import FollowUserAPIView,UnfollowerUserAPIView,CreateRequestFollowAPIView,UnRequestFollowAPIView,DENEME_API
+from .views import FollowUserAPIView,UnfollowerUserAPIView,CreateRequestFollowAPIView,UnRequestFollowAPIView,AllFollowProccessAPIView
 
 app_name="follow"
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
 
     path("request/",CreateRequestFollowAPIView.as_view(),name="url_request"),                      # Gizli kullanıcıya istek atma
     path("unrequest/<follower__username>",UnRequestFollowAPIView.as_view(),name="url_following") ,  # İsteği geri çekme
-    path("takip-et/",DENEME_API.as_view())
+
+    path("follow-user/",AllFollowProccessAPIView.as_view())    # takip etme,takibi geri çekme,istek atma ve isteği geri çekme ( bildirimler ile)
 ]
 

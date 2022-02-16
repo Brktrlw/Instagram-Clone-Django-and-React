@@ -68,5 +68,9 @@ class SerializerUserRegister(serializers.ModelSerializer):
         if len(value)<8:
             raise serializers.ValidationError("Parola 8 karakterden fazla olmalıdır.")
 
-
+class SerializerLoginUserInfo(serializers.ModelSerializer):
+    # Giriş yaparken kullanıcı adı ve profil fotoğrafını gönderdiğimiz serializer
+    class Meta:
+        model = ModelUser
+        fields=("username","profilePhoto")
 

@@ -61,7 +61,7 @@ class UnRequestFollowAPIView(DestroyAPIView):
         ModelNotification.objects.filter(receiver_user=instance.receiver_user,sender_user=self.request.user,post=None).delete()
         instance.delete()
 
-class DENEME_API(CreateAPIView):
+class AllFollowProccessAPIView(CreateAPIView):
     serializer_class = SerializerDENEME
     queryset = ModelFollower.objects.all()
 

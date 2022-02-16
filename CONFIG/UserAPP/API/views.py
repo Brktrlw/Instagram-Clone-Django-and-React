@@ -1,10 +1,17 @@
 from rest_framework.generics import ListAPIView,CreateAPIView
 from UserAPP.models import ModelUser
-from .serializers import SerializerUserFollowers,SerializerUserFollowings,SerializerUserProfile,SerializerUserRegister
+from .serializers import SerializerUserFollowers,SerializerUserFollowings,SerializerUserProfile,SerializerUserRegister,SerializerLoginUserInfo
 from rest_framework.permissions import IsAuthenticated
 from PostAPP.API.permissions import IsFollowing
 
 
+
+class WhenLoginUserAPIView(ListAPIView):
+    # Giriş yaparken kullanıcı adı ve profil fotoğrafını gönderdiğimiz view
+    serializer_class   = SerializerLoginUserInfo
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return ModelUser.objects.filter(username=self.request.user.username)
 
 
 

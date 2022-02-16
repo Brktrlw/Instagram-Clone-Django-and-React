@@ -6,16 +6,22 @@ from LikeAPP.models import ModelCommentLike
 from CONFIG.tools import get_last_minute
 class SerializerCommentListByPost(serializers.ModelSerializer):
     #Postun yorumlarını listelediğimiz serializer
-    replies      = serializers.SerializerMethodField()
-    createdDate  = serializers.SerializerMethodField()
-    user         = SerializerUserSimpleInfo()
-    isLiked      = serializers.SerializerMethodField()
-    likeCount    = serializers.SerializerMethodField()
-    repliesCount = serializers.SerializerMethodField()
+    replies        = serializers.SerializerMethodField()
+    createdDate    = serializers.SerializerMethodField()
+    user           = SerializerUserSimpleInfo()
+    isLiked        = serializers.SerializerMethodField()
+    likeCount      = serializers.SerializerMethodField()
+    repliesCount   = serializers.SerializerMethodField()
+    parentUsername = serializers.SerializerMethodField()
+
+    def get_parentUsername(self,obj):
+        if obj.parent is None:
+            return None
+        else:
+            return obj.parent.user.username
 
     def get_repliesCount(self,obj):
         return obj.children().count()
-
 
     def get_likeCount(self,obj):
         return obj.likes.all().count()
@@ -28,7 +34,6 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
         createdDate=get_last_minute(obj.createdDate)
         return createdDate
 
-
     def get_replies(self, obj):
         # Yorumların alt yorumlarını bulmamızı sağlayan method
         if obj.any_children:
@@ -36,7 +41,7 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","isLiked","createdDate","unique_id","likeCount","repliesCount","replies")
+        fields = ("user","text","isLiked","parentUsername","createdDate","unique_id","likeCount","repliesCount","replies")
 
 class SerializerCreateComment(serializers.ModelSerializer):
     # Yorum oluşturma view

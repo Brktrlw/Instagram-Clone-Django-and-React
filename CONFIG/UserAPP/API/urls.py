@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import UserFollowersAPIView,UserFollowingAPIView,UserProfileAPIView,UserRegisterAPIView
+from .views import UserFollowersAPIView,UserFollowingAPIView,UserProfileAPIView,UserRegisterAPIView,WhenLoginUserAPIView
 
 app_name="user"
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path('<str:user__username>', UserProfileAPIView.as_view(), name="url_user"),                     # Kullanıcının profil bilgileri
 
     path("register/",UserRegisterAPIView.as_view(),name="url_register"),                             # Kullanıcı kayıt işlemi
+    path("credentials/",WhenLoginUserAPIView.as_view(),) # giriş yaparken gönderilen bilgiler
 ]
 

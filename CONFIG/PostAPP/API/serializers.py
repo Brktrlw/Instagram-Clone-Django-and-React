@@ -53,7 +53,7 @@ class SerializerFollowersPostList(serializers.ModelSerializer):
     createdDate  = serializers.SerializerMethodField()
 
     def get_createdDate(self,obj):
-        return timesince(obj.createdDate)+" ago"
+        return obj.time_format()
 
     def get_postImage(self,obj):
         return obj.get_image_url()
@@ -92,7 +92,7 @@ class SerializerUserPostList(serializers.ModelSerializer):
     commentCount = serializers.SerializerMethodField()
 
     def get_createdDate(self,obj):
-        return timesince(obj.createdDate)+" ago"
+        return obj.time_format()
 
     def get_commentCount(self,obj):
         return obj.comments.all().count()

@@ -49,7 +49,7 @@ class FollowersPostListAPIView(ListAPIView):
 
     def get_queryset(self):
         myFollowings = self.request.user.followings.all().values_list('follower_id')
-        posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("createdDate")
+        posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("-createdDate")
         return posts
 
 class UserPostListAPIView(ListAPIView):

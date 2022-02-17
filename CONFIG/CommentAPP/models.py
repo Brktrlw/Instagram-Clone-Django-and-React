@@ -2,6 +2,7 @@ from django.db import models
 from UserAPP.models import ModelUser
 from PostAPP.models import ModelPost
 from django.utils.crypto import get_random_string
+from django.contrib.humanize.templatetags.humanize import naturalday,naturaltime
 
 def create_new_ref_number():
     return str(get_random_string(25))
@@ -16,6 +17,23 @@ class ModelComment(models.Model):
 
     def __str__(self):
         return f"{self.user.username} {self.unique_id}"
+
+    def time_format(self):
+        format=naturaltime(self.createdDate)
+        if "days," in format:
+            format = self.createdDate.strftime("%a %d %Y")
+        elif "day," in format:
+            format = naturalday(format)
+        elif "minutes" in format:
+            format=format.replace("minutes","m")
+        elif "minute" in format:
+            format=format.replace("minute","m")
+        elif "hours" in format:
+            format=format.replace("hours","h")
+        elif "hour" in format:
+            format=format.replace("hour","h")
+        return format.replace(" ","")
+
 
     @property
     def any_children(self):

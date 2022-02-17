@@ -2,6 +2,7 @@ from django.db import models
 from UserAPP.models import ModelUser
 from django.utils.crypto import get_random_string
 from CONFIG.tools import LOCAL_IP,PORT_NUMBER
+from django.contrib.humanize.templatetags.humanize import naturalday,naturaltime
 
 def create_new_ref_number():
     return str(get_random_string(30))
@@ -20,6 +21,21 @@ class ModelPost(models.Model):
     def get_image_url(self):
         return "http://"+LOCAL_IP+":"+PORT_NUMBER+self.images.url
 
+    def time_format(self):
+        format=naturaltime(self.createdDate)
+        if "days," in format:
+            format = self.createdDate.strftime("%a %d %Y")
+        elif "day," in format:
+            format = naturalday(format)
+        elif "minutes" in format:
+            format=format.replace("minutes","m")
+        elif "minute" in format:
+            format=format.replace("minute","m")
+        elif "hours" in format:
+            format=format.replace("hours","h")
+        elif "hour" in format:
+            format=format.replace("hour","h")
+        return format.replace(" ","")
     class Meta:
         db_table            = "Posts"
         verbose_name        = "Gönderi"

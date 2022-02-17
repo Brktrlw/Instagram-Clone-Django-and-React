@@ -4,8 +4,31 @@ from UserAPP.API.serializers import SerializerUserSimpleInfo
 from LikeAPP.models import ModelCommentLike
 from PostAPP.models import ModelPost
 
+class CommentSerializer(serializers.ModelSerializer):
+    """
+    Alt yorumları listelediğimiz serializer
+    """
+    user        = SerializerUserSimpleInfo()
+    parentID    = serializers.SerializerMethodField()
+    createdDate = serializers.SerializerMethodField()
+    isLiked     = serializers.SerializerMethodField()
+    likeCount   = serializers.SerializerMethodField()
 
-from CONFIG.tools import get_last_minute
+    def get_parentID(self,obj):
+        if obj.parent.unique_id:
+            return obj.parent.unique_id
+        return None
+    def get_createdDate(self,obj):
+        return obj.time_format()
+    def get_isLiked(self,obj):
+        return ModelCommentLike.objects.filter(user=self.context.get("request").user, comment=obj).exists()
+    def get_likeCount(self,obj):
+        return obj.likes.all().count()
+
+    class Meta:
+        model = ModelComment
+        fields=("user","text","unique_id","likeCount","isLiked","createdDate","parentID")
+
 class SerializerCommentListByPost(serializers.ModelSerializer):
     #Postun yorumlarını listelediğimiz serializer
     replies        = serializers.SerializerMethodField()
@@ -16,34 +39,33 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
     repliesCount   = serializers.SerializerMethodField()
     parentUsername = serializers.SerializerMethodField()
 
+    def get_timeFormat(self,obj):
+        return obj.time_format()
     def get_parentUsername(self,obj):
         if obj.parent is None:
             return None
         else:
             return obj.parent.user.username
-
     def get_repliesCount(self,obj):
         return obj.children().count()
-
     def get_likeCount(self,obj):
         return obj.likes.all().count()
-
     def get_isLiked(self,obj):
         # isteği atan kullanıcı yorumu beğenmiş mi
         return ModelCommentLike.objects.filter(user=self.context.get("request").user,comment=obj).exists()
-
     def get_createdDate(self, obj):
-        createdDate=get_last_minute(obj.createdDate)
-        return createdDate
-
+        return obj.time_format()
     def get_replies(self, obj):
         # Yorumların alt yorumlarını bulmamızı sağlayan method
         if obj.any_children:
-            return SerializerCommentListByPost(obj.children(),many=True,context={"request":self.context["request"]}).data
+            return CommentSerializer(obj.children().order_by("createdDate"),many=True,context={"request":self.context["request"]}).data
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","isLiked","parentUsername","createdDate","unique_id","likeCount","repliesCount","replies")
+        fields = ("user","text","isLiked","createdDate","unique_id","likeCount","repliesCount","parentUsername","replies")
+
+
+
 
 class SerializerCreateComment(serializers.ModelSerializer):
     # Yorum oluşturma view
@@ -54,7 +76,6 @@ class SerializerCreateComment(serializers.ModelSerializer):
 
     def create(self, validated_data):
         postobj = ModelPost.objects.get(unique_id=self.context['view'].kwargs.get('postunique_id'))
-
         if validated_data.get("parent_unique_id") is not None:
             #eğer parent'ı varsa çalışıyor
             comment=ModelComment.objects.get(unique_id=validated_data["parent_unique_id"],)
@@ -70,9 +91,9 @@ class SerializerCreateComment(serializers.ModelSerializer):
     #            raise serializers.ValidationError("Postlar farklı")
     #    return attrs
 
-
 class SerializerDeleteComment(serializers.ModelSerializer):
     # Yorum silme serializer
     class Meta:
         model  = ModelComment
         fields = ("user",)
+

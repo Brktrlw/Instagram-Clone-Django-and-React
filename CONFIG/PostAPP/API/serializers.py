@@ -5,7 +5,6 @@ from LikeAPP.models import ModelPostLike
 from UserAPP.API.serializers import SerializerUserSimpleInfo
 from django.utils.timesince import timesince
 
-
 class SerializerPostCreateDelete(serializers.ModelSerializer):
     # Post oluşturma serializer'ı
     class Meta:

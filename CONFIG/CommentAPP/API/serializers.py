@@ -47,7 +47,7 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
 
 class SerializerCreateComment(serializers.ModelSerializer):
     # Yorum oluşturma view
-    parent_unique_id=serializers.CharField(required=False)
+    parent_unique_id=serializers.CharField(required=False,allow_null=True)
     class Meta:
         model  = ModelComment
         fields = ("text","parent_unique_id",)

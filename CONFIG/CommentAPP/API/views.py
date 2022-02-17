@@ -20,7 +20,6 @@ class CreateCommentAPIView(CreateAPIView):
     queryset           = ModelComment.objects.all()
     serializer_class   = SerializerCreateComment
     permission_classes = [IsFollowing,IsAuthenticated]
-
     #def perform_create(self, serializer):
     #    post = get_object_or_404(ModelPost,unique_id=self.kwargs.get("postunique_id"))
     #    parentUnique_id=serializer.validated_data.get("parent_unique_id")

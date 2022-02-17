@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from UserAPP.models import ModelUser
 from django.db.models import Q
 from .paginations import HomePagePostPagination
-
+from .permissions import IsFollowing
 
 
 class PostCreateAPIView(CreateAPIView):
@@ -53,21 +53,9 @@ class FollowersPostListAPIView(ListAPIView):
         return posts
 
 class UserPostListAPIView(ListAPIView):
-    #Herhangi bir kullanıcının profilinin görüntülenmesinde görev alır. KULLANICI ADINA GÖRE
-    serializer_class = SerializerUserPostList
-    #permission_classes = [IsFollowing]
-
-    def list(self, request, *args, **kwargs):
-        response=super().list(request,args,kwargs)
-        userOBJ=ModelUser.objects.get(username=self.kwargs.get("user__username"))
-        _data={
-            "username":userOBJ.username,
-            "isAnyStory":userOBJ.is_any_story(),
-            "profilePicture":userOBJ.get_profile_photo_url(),
-
-        }
-        response.data.insert(0,_data)
-        return response
+    #Herhangi bir kullanıcının postlarının görüntülenmesinde görev alır. KULLANICI ADINA GÖRE
+    serializer_class   = SerializerUserPostList
+    permission_classes = [IsFollowing]
 
     def get_queryset(self):
         return ModelPost.objects.filter(user__username=self.kwargs.get("user__username"))

@@ -36,14 +36,12 @@ class SerializerUserProfile(serializers.ModelSerializer):
         model  = ModelUser
         fields = ("username","totalFollowers","totalFollowings","biography","isAnyStory","profilePhoto")
 
-
 class SerializerUserSimpleInfo(serializers.ModelSerializer):
     # Bazı kullanıcı bilgilerini verir
     isAnyStory = serializers.SerializerMethodField()
     profilePicture=serializers.SerializerMethodField()
 
     def get_profilePicture(self,obj):
-
         return str(obj.get_profile_photo_url())
 
     def get_isAnyStory(self,obj):
@@ -77,3 +75,16 @@ class SerializerLoginUserInfo(serializers.ModelSerializer):
         model = ModelUser
         fields=("username","profilePhoto","isAnyStory")
 
+class SerializerUserProfileInfo(serializers.ModelSerializer):
+    isAnyStory = serializers.SerializerMethodField()
+    followerCount=serializers.SerializerMethodField()
+    followingCount=serializers.SerializerMethodField()
+    def get_followerCount(self,obj):
+        return obj.followers.all().count()
+    def get_followingCount(self,obj):
+        return obj.followings.all().count()
+    def get_isAnyStory(self, obj):
+        return obj.is_any_story()
+    class Meta:
+        model  = ModelUser
+        fields = ("username","profilePhoto","isAnyStory","followingCount","followerCount","biography","private")

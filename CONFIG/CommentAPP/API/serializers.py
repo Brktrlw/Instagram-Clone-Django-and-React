@@ -56,7 +56,7 @@ class SerializerCreateComment(serializers.ModelSerializer):
         postobj = ModelPost.objects.get(unique_id=self.context['view'].kwargs.get('postunique_id'))
 
         if validated_data.get("parent_unique_id") is not None:
-            #eğer varsa
+            #eğer parent'ı varsa çalışıyor
             comment=ModelComment.objects.get(unique_id=validated_data["parent_unique_id"],)
             return ModelComment.objects.create(parent=comment,user=self.context["request"].user,text=validated_data["text"],post=postobj)
         else:

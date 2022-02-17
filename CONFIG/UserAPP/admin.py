@@ -9,6 +9,8 @@ from StoryAPP.models import ModelStory,ModelStoryRead
 from NotificationAPP.models import ModelNotification,ModelRequest
 
 
+
+
 @admin.register(ModelStory)
 class StoryAdmin(admin.ModelAdmin):
     list_display = ["user","unique_id","createdDate"]

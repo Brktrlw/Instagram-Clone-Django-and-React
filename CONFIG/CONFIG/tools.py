@@ -1,5 +1,5 @@
 from django.utils.timesince import timesince
-
+import asyncio
 import socket
 hostname    = socket.gethostname()
 LOCAL_IP    = socket.gethostbyname(hostname)
@@ -14,5 +14,3 @@ def get_last_minute(obj):
     obj=obj.replace("hours","h")
     obj=obj.replace("hour","h")
     return obj
-
-

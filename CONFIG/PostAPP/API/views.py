@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 from UserAPP.models import ModelUser
 from django.db.models import Q
 from .paginations import HomePagePostPagination
-from ipware import get_client_ip
 
 
 
@@ -49,8 +48,6 @@ class FollowersPostListAPIView(ListAPIView):
     pagination_class = HomePagePostPagination
 
     def get_queryset(self):
-        ip = get_client_ip(self.request)
-        print(ip)
         myFollowings = self.request.user.followings.all().values_list('follower_id')
         posts        = ModelPost.objects.filter(Q(user_id__in=myFollowings)| Q(user=self.request.user)).order_by("createdDate")
         return posts
@@ -59,6 +56,18 @@ class UserPostListAPIView(ListAPIView):
     #Herhangi bir kullanıcının profilinin görüntülenmesinde görev alır. KULLANICI ADINA GÖRE
     serializer_class = SerializerUserPostList
     #permission_classes = [IsFollowing]
+
+    def list(self, request, *args, **kwargs):
+        response=super().list(request,args,kwargs)
+        userOBJ=ModelUser.objects.get(username=self.kwargs.get("user__username"))
+        _data={
+            "username":userOBJ.username,
+            "isAnyStory":userOBJ.is_any_story(),
+            "profilePicture":userOBJ.get_profile_photo_url(),
+
+        }
+        response.data.insert(0,_data)
+        return response
 
     def get_queryset(self):
         return ModelPost.objects.filter(user__username=self.kwargs.get("user__username"))

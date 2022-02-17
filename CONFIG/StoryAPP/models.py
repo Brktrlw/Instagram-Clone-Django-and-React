@@ -47,3 +47,4 @@ def whenReadStory(sender,instance,*args,**kwargs):
     isRead = ModelStoryRead.objects.filter(user=instance.user,story=instance.story)
     if isRead.count()==2:
         isRead.first().delete()
+

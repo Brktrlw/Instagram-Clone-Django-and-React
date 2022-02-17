@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from UserAPP.models import ModelUser,ModelFollower
 from django.contrib.auth.hashers import make_password
-from rest_framework_simplejwt.tokens import RefreshToken,TokenError
 
 class SerializerUserFollowers(serializers.ModelSerializer):
     # kullanıcının adına göre takipçilerini döndürür
@@ -70,7 +69,11 @@ class SerializerUserRegister(serializers.ModelSerializer):
 
 class SerializerLoginUserInfo(serializers.ModelSerializer):
     # Giriş yaparken kullanıcı adı ve profil fotoğrafını gönderdiğimiz serializer
+    isAnyStory=serializers.SerializerMethodField()
+    def get_isAnyStory(self,obj):
+        return obj.is_any_story()
+
     class Meta:
         model = ModelUser
-        fields=("username","profilePhoto")
+        fields=("username","profilePhoto","isAnyStory")
 

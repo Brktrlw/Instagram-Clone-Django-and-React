@@ -3,8 +3,6 @@ from CommentAPP.models import ModelComment
 from .serializers import SerializerCommentListByPost,SerializerCreateComment,SerializerDeleteComment
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsFollowing,IsOwner
-from PostAPP.models import ModelPost
-from django.shortcuts import get_object_or_404
 from .paginations import CommentPagination
 
 class CommentListByPostAPIView(ListAPIView):

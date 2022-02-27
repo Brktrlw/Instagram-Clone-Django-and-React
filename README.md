@@ -97,11 +97,12 @@ We tried to add as much detail as we could, from security to user experience.
 
 ## In-App Footage
 
+<div style="display:inline">
 <img src="https://media.giphy.com/media/0opWqGaqut7YXVyLOj/giphy.gif">
 <img src="https://media.giphy.com/media/dwVnNfygVh04lA8GuT/giphy.gif">
 <img src="https://media.giphy.com/media/VgPzoeSbhFmthOSqLS/giphy.gif">
 <img src="https://media.giphy.com/media/BitVrGcs1OE8FukVdz/giphy.gif">
-
+</div>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -140,8 +141,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Back-end Developer - [LinkedIn](https://www.linkedin.com/in/berkay-şen/) - brktrl@protonmail.ch
-Front-end Developer - [LinkedIn](https://www.linkedin.com/in/berkant-eruysal-450b89208/) - berkanteruysal@hotmail.com \
+Back-end Developer - [LinkedIn](https://www.linkedin.com/in/berkay-şen/) - brktrl@protonmail.ch \
+Front-end Developer - [LinkedIn](https://www.linkedin.com/in/berkant-eruysal-450b89208/) - berkanteruysal@hotmail.com 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

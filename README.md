@@ -43,8 +43,9 @@
 ## About The Project
 
 This is a clone application project of Instagram that aims to develop using the technologies that Instagram uses. \
-We tried to add as much detail as we could, from security to user experience.
+We tried to add as much detail as we could, from security to user experience. \
 
+Front-end repository of this project can be reached from is <a href="https://github.com/BerkantEruysal/instagramClone">here</a>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 

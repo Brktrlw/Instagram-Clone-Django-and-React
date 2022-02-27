@@ -27,6 +27,8 @@ class ModelPost(models.Model):
             format = self.createdDate.strftime("%a %d %Y")
         elif "day," in format:
             format = naturalday(format)
+        elif "a m" in format:
+            format=format.replace("a ","1 ")
         elif "minutes" in format:
             format=format.replace("minutes","m")
         elif "minute" in format:

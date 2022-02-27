@@ -8,7 +8,6 @@ from django.db.models import Q
 from .paginations import HomePagePostPagination
 from .permissions import IsFollowing
 
-
 class PostCreateAPIView(CreateAPIView):
     # Post olurşturma view
     queryset         = ModelPost.objects.all()

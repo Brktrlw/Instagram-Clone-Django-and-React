@@ -9,12 +9,12 @@ class CommentSerializer(serializers.ModelSerializer):
     Alt yorumları listelediğimiz serializer
     """
     user        = SerializerUserSimpleInfo()
-    parentID    = serializers.SerializerMethodField()
+    parent_unique_id    = serializers.SerializerMethodField()
     createdDate = serializers.SerializerMethodField()
     isLiked     = serializers.SerializerMethodField()
     likeCount   = serializers.SerializerMethodField()
 
-    def get_parentID(self,obj):
+    def get_parent_unique_id(self,obj):
         if obj.parent.unique_id:
             return obj.parent.unique_id
         return None
@@ -27,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ModelComment
-        fields=("user","text","unique_id","likeCount","isLiked","createdDate","parentID")
+        fields=("user","text","unique_id","likeCount","isLiked","createdDate","parent_unique_id")
 
 class SerializerCommentListByPost(serializers.ModelSerializer):
     #Postun yorumlarını listelediğimiz serializer
@@ -37,15 +37,12 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
     isLiked        = serializers.SerializerMethodField()
     likeCount      = serializers.SerializerMethodField()
     repliesCount   = serializers.SerializerMethodField()
-    parentUsername = serializers.SerializerMethodField()
+    parent_unique_id=serializers.SerializerMethodField()
 
+    def get_parent_unique_id(self,obj):
+        return None
     def get_timeFormat(self,obj):
         return obj.time_format()
-    def get_parentUsername(self,obj):
-        if obj.parent is None:
-            return None
-        else:
-            return obj.parent.user.username
     def get_repliesCount(self,obj):
         return obj.children().count()
     def get_likeCount(self,obj):
@@ -59,12 +56,11 @@ class SerializerCommentListByPost(serializers.ModelSerializer):
         # Yorumların alt yorumlarını bulmamızı sağlayan method
         if obj.any_children:
             return CommentSerializer(obj.children().order_by("createdDate"),many=True,context={"request":self.context["request"]}).data
+        return []
 
     class Meta:
         model  = ModelComment
-        fields = ("user","text","isLiked","createdDate","unique_id","likeCount","repliesCount","parentUsername","replies")
-
-
+        fields = ("user","text","isLiked","createdDate","parent_unique_id","unique_id","likeCount","repliesCount","replies")
 
 
 class SerializerCreateComment(serializers.ModelSerializer):

@@ -7,15 +7,16 @@ from UserAPP.models import ModelUser
 from django.db.models import Q
 from .paginations import HomePagePostPagination
 from .permissions import IsFollowing
-
+from .throttle import PostCreateThrottle
 class PostCreateAPIView(CreateAPIView):
+
     # Post olurşturma view
     queryset         = ModelPost.objects.all()
     serializer_class = SerializerPostCreateDelete
-
+    throttle_classes = [PostCreateThrottle]
     def perform_create(self, serializer):
         # Post kayıt edilirken kullanıcıyı giriş yapmış kullanıcı olarak ayarlıyoruz
-        user = ModelUser.objects.filter(username="admin")
+        user = ModelUser.objects.get(username=self.request.user.username)
         serializer.save(user=user)
 
 class DeletePostAPIView(DestroyAPIView):

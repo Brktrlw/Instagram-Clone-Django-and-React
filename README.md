@@ -140,7 +140,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Back-end Developer - [LinkedIn](https://www.linkedin.com/in/berkay-şen/) - brktrl@protonmail.ch
+Back-end Developer - [LinkedIn](https://www.linkedin.com/in/berkay-şen/) - brktrl@protonmail.ch  \
 Front-end Developer - [LinkedIn](https://www.linkedin.com/in/berkant-eruysal-450b89208/) - berkanteruysal@hotmail.com \
 
 <p align="right">(<a href="#top">back to top</a>)</p>

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     #Other App
     'django_cleanup',
     'rest_framework',
+    'TestApp'
 ]
 
 MIDDLEWARE = [

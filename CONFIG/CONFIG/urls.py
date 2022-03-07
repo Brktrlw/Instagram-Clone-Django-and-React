@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/like/', include("LikeAPP.API.urls", namespace="likes"), name="url_likes"),
     path('api/notification/', include("NotificationAPP.API.urls", namespace="notification"), name="url_notification"),
     path('api/follow/', include("FollowAPP.API.urls", namespace="follow"), name="url_follow"),
+    path("api/test/",include("TestApp.api.urls",),name="url_test"),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
